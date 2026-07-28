@@ -16,7 +16,6 @@ This is a static site with no build steps required.
   2. Set the source branch to `main`
   3. Set the folder to `/ (root)` (or wherever the HTML file lives)
   4. Save — your site will be live at `https://yuvrajisthakur96-glitch.github.io/yuvraj/`
-  5. Add a review section
 
 ## 🔒 Admin Console
 
