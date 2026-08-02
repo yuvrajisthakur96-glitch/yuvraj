@@ -143,6 +143,45 @@
   .coupon-row{ display:flex; gap:8px; margin:14px 0; }
   .coupon-row input{ flex:1; border:1px solid var(--line); padding:10px 12px; font-family:var(--font-mono); font-size:.8rem; background:var(--ivory); }
   .coupon-row button{ padding:0 16px; background:var(--emerald-deep); color:var(--ivory); border:none; font-size:.72rem; letter-spacing:.08em; text-transform:uppercase; }
+  .coupon-suggest{ font-family:var(--font-mono); font-size:.68rem; color:#8a806c; display:flex; align-items:center; gap:6px; flex-wrap:wrap; margin-bottom:8px; }
+  .coupon-chip{
+    border:1px dashed var(--gold-dim); background:none; color:var(--gold-dim); padding:3px 9px;
+    border-radius:20px; font-family:var(--font-mono); font-size:.66rem; letter-spacing:.04em; cursor:pointer;
+  }
+  .coupon-chip:hover{ background:var(--gold-dim); color:var(--ivory); }
+
+  /* ===== CUSTOMER ORDER TRACKING ===== */
+  .track-section{ padding:70px 6vw; background:var(--espresso); color:var(--ivory); }
+  .track-section .eyebrow{ color:var(--gold); }
+  .track-section h2{ color:var(--ivory); margin-bottom:10px; }
+  .track-section p.lead{ color:rgba(247,241,228,.65); max-width:520px; margin-bottom:28px; }
+  .track-form{ display:flex; gap:10px; flex-wrap:wrap; max-width:640px; margin-bottom:8px; }
+  .track-form input{
+    flex:1; min-width:180px; border:1px solid rgba(198,154,78,.4); background:var(--ivory-dim);
+    color:var(--ivory); padding:12px 14px; font-family:var(--font-mono); font-size:.82rem;
+  }
+  .track-form button{
+    padding:0 22px; background:var(--gold); color:var(--espresso); border:none;
+    font-size:.72rem; letter-spacing:.08em; text-transform:uppercase; font-weight:700;
+  }
+  .track-msg{ font-family:var(--font-mono); font-size:.76rem; color:#ff9d9d; min-height:16px; margin-bottom:10px; }
+  .track-result{ margin-top:24px; max-width:760px; }
+  .track-result .tr-head{ display:flex; justify-content:space-between; flex-wrap:wrap; gap:10px; margin-bottom:26px; font-family:var(--font-mono); font-size:.8rem; color:rgba(247,241,228,.75); }
+  .track-result .tr-head b{ color:var(--gold-light); }
+  .tracker-steps{ display:flex; align-items:flex-start; }
+  .tracker-step{ flex:1; text-align:center; position:relative; }
+  .tracker-step .dot{
+    width:22px; height:22px; border-radius:50%; background:var(--ivory-dim); border:2px solid rgba(198,154,78,.4);
+    margin:0 auto 10px; display:flex; align-items:center; justify-content:center; font-size:.7rem; color:var(--ivory-dim);
+    position:relative; z-index:2;
+  }
+  .tracker-step.done .dot{ background:var(--gold); border-color:var(--gold); color:var(--espresso); }
+  .tracker-step.current .dot{ background:var(--emerald-deep); border-color:var(--gold); color:var(--ivory); animation:pulseDot 1.4s infinite; }
+  .tracker-step .line{ position:absolute; top:11px; left:-50%; width:100%; height:2px; background:rgba(198,154,78,.3); z-index:1; }
+  .tracker-step:first-child .line{ display:none; }
+  .tracker-step.done .line{ background:var(--gold); }
+  .tracker-step .lbl{ font-family:var(--font-mono); font-size:.66rem; letter-spacing:.04em; color:rgba(247,241,228,.6); text-transform:uppercase; }
+  .tracker-step.done .lbl, .tracker-step.current .lbl{ color:var(--ivory); }
   .coupon-msg{ font-family:var(--font-mono); font-size:.7rem; min-height:14px; margin-top:-6px; margin-bottom:10px; }
   .coupon-msg.ok{ color:#3f8f5f; }
   .coupon-msg.err{ color:var(--burgundy); }
@@ -580,6 +619,24 @@
     .qv-grid{grid-template-columns:1fr;}
     .qv-grid img{min-height:220px;}
     .foot-grid{grid-template-columns:1fr 1fr; row-gap:36px;}
+    .form-row{grid-template-columns:1fr;}
+    .nav-actions{gap:12px;}
+    .float-stack{right:14px; bottom:14px; gap:10px;}
+    .chat-panel{right:14px; bottom:80px; width:min(300px,86vw);}
+    .grid{grid-template-columns:repeat(auto-fill, minmax(150px, 1fr)); gap:18px;}
+    .catalog{padding:16px 4vw 70px;}
+    .flash-bar{flex-direction:column; gap:6px; padding:10px 4vw;}
+    .search-overlay{padding-top:8vh;}
+  }
+  @media(max-width:480px){
+    .icon-btn{width:32px; height:32px;}
+    .brand-logo{height:34px;}
+    .grid{grid-template-columns:repeat(auto-fill, minmax(135px, 1fr)); gap:12px;}
+    .card-body{padding:12px;}
+    .drawer{width:100vw;}
+    .mini-card{flex:0 0 130px;}
+    .mini-card img{width:130px; height:155px;}
+    .co-summary, .delivery-calc{padding:10px 12px;}
   }
   @media(prefers-reduced-motion: reduce){
     *{animation-duration:.001ms !important; transition-duration:.001ms !important;}
@@ -599,6 +656,7 @@
   <nav class="links">
     <a href="#catalog">Collection</a>
     <a href="#story">Maison</a>
+    <a href="#trackOrder">Track Order</a>
     <a href="#footer">Contact</a>
   </nav>
   <div class="nav-actions">
@@ -677,6 +735,7 @@
 <div id="mobileNav" style="display:none; position:fixed; inset:0; background:var(--emerald-deep); z-index:199; flex-direction:column; align-items:center; justify-content:center; gap:34px;">
   <a href="#catalog" onclick="toggleMobileNav()" style="color:var(--ivory); font-family:var(--font-display); font-size:1.4rem;">Collection</a>
   <a href="#story" onclick="toggleMobileNav()" style="color:var(--ivory); font-family:var(--font-display); font-size:1.4rem;">Maison</a>
+  <a href="#trackOrder" onclick="toggleMobileNav()" style="color:var(--ivory); font-family:var(--font-display); font-size:1.4rem;">Track Order</a>
   <a href="#footer" onclick="toggleMobileNav()" style="color:var(--ivory); font-family:var(--font-display); font-size:1.4rem;">Contact</a>
   <button onclick="toggleMobileNav()" style="position:absolute; top:24px; right:28px; background:none; border:none; color:var(--gold-light); font-size:1.8rem;">&times;</button>
 </div>
@@ -839,6 +898,20 @@
   </div>
 </section>
 
+<!-- ===== TRACK YOUR ORDER ===== -->
+<section class="track-section" id="trackOrder">
+  <span class="eyebrow">Where's my order</span>
+  <h2>Track Your Order</h2>
+  <p class="lead">Enter your Order ID along with the phone number or email used at checkout to see real-time status — from placed to dispatched to delivered.</p>
+  <div class="track-form">
+    <input type="text" id="track_orderid" placeholder="Order ID (e.g. AVZ123456)">
+    <input type="text" id="track_contact" placeholder="Phone or email used at checkout">
+    <button onclick="trackMyOrder()" data-analytics="track-order-submit">Track Order</button>
+  </div>
+  <div class="track-msg" id="trackMsg"></div>
+  <div class="track-result" id="trackResult"></div>
+</section>
+
 <!-- ===== FOOTER ===== -->
 <footer id="footer">
   <div class="foot-grid">
@@ -884,8 +957,13 @@
   <div class="drawer-body" id="cartBody"></div>
   <div class="drawer-foot" id="cartFoot" style="display:none;">
     <div class="coupon-row">
-      <input type="text" id="couponCode" placeholder="Coupon code (try WELCOME10)">
+      <input type="text" id="couponCode" placeholder="Coupon code">
       <button onclick="applyCoupon()">Apply</button>
+    </div>
+    <div class="coupon-suggest">
+      Try: <button type="button" class="coupon-chip" onclick="fillCoupon('WELCOME10')">WELCOME10</button>
+      <button type="button" class="coupon-chip" onclick="fillCoupon('AVENZO500')">AVENZO500</button>
+      <button type="button" class="coupon-chip" onclick="fillCoupon('FREESHIP')">FREESHIP</button>
     </div>
     <div class="coupon-msg" id="couponMsg"></div>
     <div class="sub-row"><span>Subtotal</span><span id="cartSubtotal">₹0</span></div>
@@ -988,7 +1066,7 @@ let currentLang = localStorage.getItem('avenzo_lang') || 'en';
 const COUPONS = {
   'WELCOME10': { type:'percent', value:10, label:'10% off your order' },
   'AVENZO500': { type:'flat', value:500, label:'₹500 off orders above ₹5,000' },
-  'FREESHIP': { type:'shipping', value:0, label:'Free concierge delivery' }
+  'FREESHIP': { type:'shipping', value:0, minSpend:599, label:'Free concierge delivery on orders above ₹599' }
 };
 const WHATSAPP_NUMBER = '917807811257';
 const FLASH_SALE_END = Date.now() + (1000*60*60*6); // 6 hour rolling flash sale window
@@ -1146,6 +1224,64 @@ function persistOrderTrackingStage(id, stage){
   renderOrdersTable();
   if(useFirebase) db.collection('orders').doc(id).update({trackingStage: stage, status: o.status}).catch(e=>console.error('Update tracking failed:', e));
   else saveStore();
+}
+function persistOrderDelete(id){
+  orders = orders.filter(o=>o.id!==id);
+  renderOrdersTable();
+  if(useFirebase) db.collection('orders').doc(id).delete().catch(e=>console.error('Delete order failed:', e));
+  else saveStore();
+}
+
+/* ============ CUSTOMER ORDER TRACKING ============ */
+function trackMyOrder(){
+  const idInput = document.getElementById('track_orderid').value.trim().toUpperCase();
+  const contact = document.getElementById('track_contact').value.trim().toLowerCase();
+  const msgEl = document.getElementById('trackMsg');
+  const resultEl = document.getElementById('trackResult');
+  resultEl.innerHTML = '';
+  msgEl.textContent = '';
+
+  if(!idInput || !contact){
+    msgEl.textContent = 'Please enter both your Order ID and the phone or email used at checkout.';
+    return;
+  }
+
+  const order = orders.find(o => {
+    const idMatch = (o.id || '').toUpperCase() === idInput;
+    const phoneMatch = (o.phone || '').toLowerCase().replace(/\s/g,'') === contact.replace(/\s/g,'');
+    const emailMatch = (o.email || '').toLowerCase() === contact;
+    return idMatch && (phoneMatch || emailMatch);
+  });
+
+  if(!order){
+    msgEl.textContent = "We couldn't find an order matching those details. Please double-check the Order ID and contact info.";
+    trackEvent('track_order_not_found', { order_id: idInput });
+    return;
+  }
+
+  const stage = order.trackingStage || 0;
+  const stepsHtml = TRACKING_STAGES.map((label, i) => {
+    let cls = 'tracker-step';
+    let icon = '';
+    if(i < stage){ cls += ' done'; icon = '&#10003;'; }
+    else if(i === stage){ cls += ' current'; icon = '&#8226;'; }
+    return `
+      <div class="${cls}">
+        <div class="line"></div>
+        <div class="dot">${icon}</div>
+        <div class="lbl">${label}</div>
+      </div>`;
+  }).join('');
+
+  resultEl.innerHTML = `
+    <div class="tr-head">
+      <span>Order <b>${order.id}</b></span>
+      <span>${order.items || ''}</span>
+      <span>Placed ${order.time || ''}</span>
+    </div>
+    <div class="tracker-steps">${stepsHtml}</div>`;
+
+  trackEvent('track_order_found', { order_id: order.id, stage: TRACKING_STAGES[stage] });
 }
 
 loadStore();
@@ -1395,7 +1531,7 @@ function renderCart(){
   const sub = cartSubtotal();
   const discount = couponDiscount(sub);
   let ship = sub >= SHIPPING_THRESHOLD || sub===0 ? 0 : SHIPPING_FEE;
-  if(appliedCoupon && appliedCoupon.type === 'shipping') ship = 0;
+  if(appliedCoupon && appliedCoupon.type === 'shipping' && sub >= (appliedCoupon.minSpend||0)) ship = 0;
   document.getElementById('cartSubtotal').textContent = inr(sub);
   const discRow = document.getElementById('cartDiscountRow');
   if(discount > 0){ discRow.style.display='flex'; document.getElementById('cartDiscount').textContent = '-' + inr(discount); }
@@ -1596,6 +1732,10 @@ function runLiveSearch(){
 }
 
 /* ============ COUPONS ============ */
+function fillCoupon(code){
+  document.getElementById('couponCode').value = code;
+  applyCoupon();
+}
 function applyCoupon(){
   const codeInput = document.getElementById('couponCode');
   const msgEl = document.getElementById('couponMsg');
@@ -1603,8 +1743,14 @@ function applyCoupon(){
   const c = COUPONS[code];
   if(!c){ msgEl.textContent = 'Invalid or expired coupon code.'; msgEl.className='coupon-msg err'; appliedCoupon = null; renderCart(); return; }
   appliedCoupon = Object.assign({ code }, c);
-  msgEl.textContent = `Applied: ${c.label}`;
-  msgEl.className = 'coupon-msg ok';
+  const sub = cartSubtotal();
+  if(c.minSpend && sub < c.minSpend){
+    msgEl.textContent = `Add ${inr(c.minSpend - sub)} more to unlock: ${c.label}`;
+    msgEl.className = 'coupon-msg err';
+  } else {
+    msgEl.textContent = `Applied: ${c.label}`;
+    msgEl.className = 'coupon-msg ok';
+  }
   trackEvent('apply_coupon', { code });
   renderCart();
 }
@@ -1699,7 +1845,7 @@ function buildOrderSummary(paymentMethod){
   const sub = cartSubtotal();
   const discount = couponDiscount(sub);
   let ship = sub >= SHIPPING_THRESHOLD ? 0 : SHIPPING_FEE;
-  if(appliedCoupon && appliedCoupon.type === 'shipping') ship = 0;
+  if(appliedCoupon && appliedCoupon.type === 'shipping' && sub >= (appliedCoupon.minSpend||0)) ship = 0;
   return {
     customer_name: document.getElementById('co_name').value.trim(),
     customer_email: document.getElementById('co_email').value.trim(),
@@ -1720,7 +1866,7 @@ function recordOrder(paymentMethod, status){
   const sub = cartSubtotal();
   const discount = couponDiscount(sub);
   let ship = sub >= SHIPPING_THRESHOLD ? 0 : SHIPPING_FEE;
-  if(appliedCoupon && appliedCoupon.type === 'shipping') ship = 0;
+  if(appliedCoupon && appliedCoupon.type === 'shipping' && sub >= (appliedCoupon.minSpend||0)) ship = 0;
   const itemsList = cart.map(c=>{
     const p = products.find(x=>x.id===c.productId);
     return p ? `${p.name} x${c.qty}` : '';
@@ -1772,7 +1918,7 @@ function renderUpiPayment(){
   const sub = cartSubtotal();
   const discount = couponDiscount(sub);
   let ship = sub >= SHIPPING_THRESHOLD ? 0 : SHIPPING_FEE;
-  if(appliedCoupon && appliedCoupon.type === 'shipping') ship = 0;
+  if(appliedCoupon && appliedCoupon.type === 'shipping' && sub >= (appliedCoupon.minSpend||0)) ship = 0;
   const total = Math.max(0, sub - discount + ship);
   const note = 'Avenzo Order ' + Date.now().toString().slice(-6);
   const upiUrl = `upi://pay?pa=${encodeURIComponent(UPI_ID)}&pn=${encodeURIComponent(MERCHANT_NAME)}&am=${total}&cu=INR&tn=${encodeURIComponent(note)}`;
@@ -1798,7 +1944,7 @@ function openCheckout(){
   const sub = cartSubtotal();
   const discount = couponDiscount(sub);
   let ship = sub >= SHIPPING_THRESHOLD ? 0 : SHIPPING_FEE;
-  if(appliedCoupon && appliedCoupon.type === 'shipping') ship = 0;
+  if(appliedCoupon && appliedCoupon.type === 'shipping' && sub >= (appliedCoupon.minSpend||0)) ship = 0;
   document.getElementById('coSummary').innerHTML = `
     <div class="row"><span>Items (${cart.reduce((s,c)=>s+c.qty,0)})</span><span>${inr(sub)}</span></div>
     ${discount>0 ? `<div class="row"><span>Coupon (${appliedCoupon.code})</span><span>-${inr(discount)}</span></div>` : ''}
@@ -1869,7 +2015,7 @@ function renderOrdersTable(){
       <td><span class="status-badge status-${o.status==='Paid'?'paid':'pending'}">${o.status}</span></td>
       <td style="white-space:nowrap;">${o.time}</td>
       <td style="white-space:nowrap;">${TRACKING_STAGES[stage]}${stage < TRACKING_STAGES.length-1 ? `<br><button onclick="persistOrderTrackingStage('${o.id}', ${stage+1})">Advance to ${TRACKING_STAGES[stage+1]}</button>` : ''}</td>
-      <td>${o.status!=='Paid' ? `<button onclick="confirmOrderPayment('${o.id}')">Mark Confirmed</button>` : ''}</td>
+      <td>${o.status!=='Paid' ? `<button onclick="confirmOrderPayment('${o.id}')">Mark Confirmed</button>` : ''} <button onclick="deleteOrder('${o.id}')" style="background:var(--burgundy); color:#fff;">Delete</button></td>
     </tr>`;}).join('');
 }
 function confirmOrderPayment(orderId){
@@ -1912,6 +2058,11 @@ function deleteSupplier(id){
 }
 function deleteProduct(id){
   persistProductDelete(id);
+}
+function deleteOrder(id){
+  if(!confirm('Delete order ' + id + '? This cannot be undone.')) return;
+  persistOrderDelete(id);
+  showToast('Order ' + id + ' deleted');
 }
 function showConsoleToast(elId, msg){
   const el = document.getElementById(elId);
