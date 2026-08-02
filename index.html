@@ -25,6 +25,25 @@
     --font-body:'Manrope', sans-serif;
     --font-mono:'IBM Plex Mono', monospace;
   }
+  /* ===== DARK MODE ===== */
+  body[data-theme="dark"]{
+    --ivory:#151109;
+    --ivory-dim:#1c1710;
+    --espresso:#f1ead9;
+    --line: rgba(198,154,78,0.28);
+  }
+  body[data-theme="dark"] .card{ background:#1c1710; border-color:var(--line); }
+  body[data-theme="dark"] .card-body .desc{ color:#c9bfa6; }
+  body[data-theme="dark"] .chip{ background:#1c1710; color:var(--espresso); }
+  body[data-theme="dark"] .chip:hover, body[data-theme="dark"] .chip.active{ background:var(--emerald-deep); color:var(--ivory);}
+  body[data-theme="dark"] .modal, body[data-theme="dark"] .drawer{ background:#1c1710; color:var(--espresso); }
+  body[data-theme="dark"] .field input, body[data-theme="dark"] .field select, body[data-theme="dark"] .field textarea{ background:#151109; color:var(--espresso); }
+  body[data-theme="dark"] .co-summary{ background:#151109; }
+  body[data-theme="dark"] .rail-section{ background:var(--ivory); }
+  body[data-theme="dark"] .modal-close{ background:#1c1710; color:var(--espresso); }
+  body[data-theme="dark"] .account-order-item{ border-color:var(--line); }
+  body[data-theme="dark"] .tl-dot{ background:#1c1710; }
+  body[data-theme="dark"] .track-empty{ color:#8a806c; }
   *{box-sizing:border-box; margin:0; padding:0;}
   html{scroll-behavior:smooth;}
   body{
@@ -46,6 +65,144 @@
     font-size:.68rem;
     color:var(--gold-dim);
   }
+
+  /* ===== FLASH SALE COUNTDOWN BAR ===== */
+  .flash-bar{
+    background:var(--burgundy); color:var(--ivory);
+    text-align:center; padding:10px 6vw; font-family:var(--font-mono);
+    font-size:.78rem; letter-spacing:.06em; display:flex; align-items:center;
+    justify-content:center; gap:12px; flex-wrap:wrap; position:relative; z-index:150;
+  }
+  .flash-bar .fb-timer{ display:flex; gap:6px; }
+  .flash-bar .fb-timer span{
+    background:rgba(255,255,255,.15); padding:3px 8px; border-radius:3px; font-weight:700;
+    min-width:34px; text-align:center;
+  }
+
+  /* ===== BADGES ===== */
+  .badge-row{ position:absolute; top:12px; left:12px; display:flex; flex-direction:column; gap:6px; z-index:2; }
+  .badge-row .card-tag{ position:static; }
+  .discount-badge{
+    background:var(--burgundy); color:#fff; font-family:var(--font-mono); font-size:.6rem;
+    letter-spacing:.08em; padding:5px 10px; text-transform:uppercase; width:fit-content;
+  }
+  .bestseller-badge{
+    background:var(--gold); color:var(--espresso); font-family:var(--font-mono); font-size:.6rem;
+    letter-spacing:.08em; padding:5px 10px; text-transform:uppercase; width:fit-content;
+  }
+  .viewers-tag{
+    position:absolute; bottom:52px; left:12px; background:rgba(11,10,7,.72); color:#ffd7d7;
+    font-family:var(--font-mono); font-size:.6rem; padding:4px 8px; border-radius:3px; z-index:2;
+    display:flex; align-items:center; gap:5px;
+  }
+  .viewers-tag .dot{ width:6px; height:6px; border-radius:50%; background:#ff6060; animation:pulseDot 1.4s infinite; }
+  @keyframes pulseDot{ 0%,100%{opacity:1;} 50%{opacity:.3;} }
+  .orig-price{ text-decoration:line-through; color:#8a806c; font-size:.78rem; margin-right:6px; }
+  .rating-row{ display:flex; align-items:center; gap:6px; font-family:var(--font-mono); font-size:.68rem; color:var(--gold-dim); }
+  .rating-row .stars{ color:var(--gold); letter-spacing:1px; }
+  .wish-btn{
+    position:absolute; top:12px; right:12px; width:36px; height:36px; border-radius:50%;
+    background:rgba(255,255,255,.9); border:1px solid var(--line); display:flex; align-items:center;
+    justify-content:center; z-index:3; transition:all .25s ease;
+  }
+  .wish-btn svg{ width:16px; height:16px; stroke:var(--burgundy); fill:none; }
+  .wish-btn.active svg{ fill:var(--burgundy); }
+  .estimate-line{ font-family:var(--font-mono); font-size:.68rem; color:#6d7a6b; }
+
+  /* ===== RAILS: RECENTLY VIEWED / RELATED ===== */
+  .sub-rail-section{ padding:10px 0 10px; background:var(--ivory); }
+  .sub-rail-section .rail-head{ padding:0 6vw; margin-bottom:14px; }
+  .sub-rail-section .rail-head h2{ font-size:1.15rem; }
+  .mini-grid{ display:flex; gap:16px; overflow-x:auto; padding:4px 6vw 16px; scrollbar-width:none; }
+  .mini-grid::-webkit-scrollbar{ display:none; }
+  .mini-card{ flex:0 0 170px; cursor:pointer; }
+  .mini-card img{ width:170px; height:200px; object-fit:cover; }
+  .mini-card .mn{ font-family:var(--font-display); font-size:.85rem; margin-top:6px; }
+  .mini-card .mp{ font-family:var(--font-mono); font-size:.78rem; color:var(--gold-dim); }
+
+  /* ===== LIVE SEARCH ===== */
+  .search-overlay{
+    position:fixed; inset:0; background:rgba(11,10,7,.7); z-index:350; display:flex;
+    align-items:flex-start; justify-content:center; padding-top:12vh; opacity:0; pointer-events:none;
+    transition:opacity .3s ease;
+  }
+  .search-overlay.show{ opacity:1; pointer-events:auto; }
+  .search-box{ width:min(640px, 90vw); }
+  .search-box input{
+    width:100%; padding:18px 20px; font-size:1.1rem; border:none; border-radius:2px;
+    font-family:var(--font-display);
+  }
+  .search-results{ background:var(--ivory); max-height:56vh; overflow-y:auto; margin-top:2px; }
+  .search-result-item{
+    display:flex; gap:14px; align-items:center; padding:12px 20px; border-bottom:1px solid var(--line);
+    cursor:pointer;
+  }
+  .search-result-item img{ width:44px; height:54px; object-fit:cover; }
+  .search-result-item .sn{ font-family:var(--font-display); font-size:.92rem; }
+  .search-result-item .sp{ font-family:var(--font-mono); font-size:.72rem; color:var(--gold-dim); }
+  .search-empty{ padding:20px; text-align:center; color:#8a806c; font-size:.85rem; background:var(--ivory); }
+
+  /* ===== COUPONS ===== */
+  .coupon-row{ display:flex; gap:8px; margin:14px 0; }
+  .coupon-row input{ flex:1; border:1px solid var(--line); padding:10px 12px; font-family:var(--font-mono); font-size:.8rem; background:var(--ivory); }
+  .coupon-row button{ padding:0 16px; background:var(--emerald-deep); color:var(--ivory); border:none; font-size:.72rem; letter-spacing:.08em; text-transform:uppercase; }
+  .coupon-msg{ font-family:var(--font-mono); font-size:.7rem; min-height:14px; margin-top:-6px; margin-bottom:10px; }
+  .coupon-msg.ok{ color:#3f8f5f; }
+  .coupon-msg.err{ color:var(--burgundy); }
+
+  /* ===== DELIVERY CALCULATOR ===== */
+  .delivery-calc{ margin:16px 0; padding:14px 16px; border:1px solid var(--line); background:var(--ivory); }
+  .delivery-calc .dc-row{ display:flex; gap:8px; }
+  .delivery-calc input{ flex:1; border:1px solid var(--line); padding:9px 10px; font-family:var(--font-mono); font-size:.8rem; }
+  .delivery-calc button{ padding:0 14px; border:1px solid var(--emerald-deep); background:none; color:var(--emerald-deep); font-size:.68rem; text-transform:uppercase; letter-spacing:.08em; }
+  .delivery-calc .dc-result{ margin-top:10px; font-family:var(--font-mono); font-size:.76rem; color:var(--gold-dim); min-height:16px; }
+
+  /* ===== BACK IN STOCK ===== */
+  .stock-out{ color:var(--burgundy); font-family:var(--font-mono); font-size:.62rem; margin-top:2px; }
+  .notify-row{ display:flex; gap:6px; margin-top:8px; }
+  .notify-row input{ flex:1; border:1px solid var(--line); padding:7px 8px; font-size:.72rem; }
+  .notify-row button{ padding:0 10px; background:var(--emerald-deep); color:var(--ivory); border:none; font-size:.62rem; text-transform:uppercase; }
+
+  /* ===== REVIEWS ===== */
+  .reviews-block{ margin-top:18px; border-top:1px solid var(--line); padding-top:16px; }
+  .reviews-block h4{ font-family:var(--font-display); font-size:1.05rem; margin-bottom:10px; }
+  .review-item{ padding:10px 0; border-bottom:1px dashed var(--line); }
+  .review-item .rn{ font-family:var(--font-mono); font-size:.72rem; font-weight:600; }
+  .review-item .rs{ color:var(--gold); font-size:.78rem; }
+  .review-item .rc{ font-size:.82rem; color:#5c5341; margin-top:4px; }
+  .review-form{ display:flex; flex-direction:column; gap:8px; margin-top:12px; }
+  .review-form select, .review-form input, .review-form textarea{ border:1px solid var(--line); padding:8px 10px; font-family:var(--font-body); font-size:.82rem; }
+  .review-form button{ align-self:flex-start; padding:8px 16px; background:var(--emerald-deep); color:var(--ivory); border:none; font-size:.7rem; text-transform:uppercase; letter-spacing:.08em; }
+
+  /* ===== WHATSAPP + LIVE CHAT FLOATERS ===== */
+  .float-stack{ position:fixed; right:22px; bottom:22px; display:flex; flex-direction:column; gap:14px; z-index:250; }
+  .float-btn{
+    width:56px; height:56px; border-radius:50%; display:flex; align-items:center; justify-content:center;
+    box-shadow:0 8px 24px rgba(0,0,0,.28); border:none; cursor:pointer; color:#fff;
+  }
+  .whatsapp-btn{ background:#25D366; }
+  .whatsapp-btn svg{ width:28px; height:28px; fill:#fff; }
+  .chat-btn{ background:var(--emerald-deep); }
+  .chat-btn svg{ width:24px; height:24px; stroke:var(--gold-light); fill:none; }
+  .chat-panel{
+    position:fixed; right:22px; bottom:92px; width:min(320px,88vw); background:var(--ivory);
+    border:1px solid var(--line); box-shadow:var(--shadow); z-index:251; display:none; flex-direction:column;
+    max-height:420px;
+  }
+  .chat-panel.open{ display:flex; }
+  .chat-head{ background:var(--emerald-deep); color:var(--ivory); padding:14px 16px; display:flex; justify-content:space-between; align-items:center; }
+  .chat-head span{ font-family:var(--font-display); font-size:1rem; }
+  .chat-head button{ background:none; border:none; color:var(--ivory); font-size:1.1rem; }
+  .chat-body{ flex:1; overflow-y:auto; padding:14px 16px; display:flex; flex-direction:column; gap:8px; font-size:.82rem; }
+  .chat-msg{ padding:8px 12px; border-radius:10px; max-width:85%; }
+  .chat-msg.bot{ background:var(--ivory-dim); align-self:flex-start; }
+  .chat-msg.user{ background:var(--emerald-deep); color:var(--ivory); align-self:flex-end; }
+  .chat-input-row{ display:flex; border-top:1px solid var(--line); }
+  .chat-input-row input{ flex:1; border:none; padding:12px; font-size:.82rem; background:none; }
+  .chat-input-row button{ border:none; background:none; color:var(--emerald-deep); padding:0 14px; font-weight:700; }
+
+  /* ===== DARK MODE TOGGLE ICON ===== */
+  .theme-btn svg{ width:17px; height:17px; }
 
   /* ===== NAV ===== */
   header{
@@ -409,6 +566,50 @@
   }
   .toast.show{opacity:1; transform:translateX(-50%) translateY(0);}
 
+  /* ===== LANGUAGE SWITCHER ===== */
+  .lang-select{
+    background:none; border:1px solid var(--line); color:var(--ivory);
+    height:40px; padding:0 10px; border-radius:20px; font-family:var(--font-mono);
+    font-size:.72rem; letter-spacing:.05em; cursor:pointer;
+  }
+  .lang-select option{ color:var(--espresso); background:var(--ivory); }
+  header.solid .lang-select{ border-color:var(--line); }
+
+  /* ===== ACCOUNT MODAL ===== */
+  .auth-tabs{ display:flex; gap:0; margin-bottom:20px; border-bottom:1px solid var(--line); }
+  .auth-tab{ flex:1; text-align:center; padding:10px 0; font-family:var(--font-mono); font-size:.72rem; letter-spacing:.08em; text-transform:uppercase; color:var(--gold-dim); background:none; border:none; border-bottom:2px solid transparent; }
+  .auth-tab.active{ color:var(--emerald-deep); border-bottom-color:var(--gold); }
+  .auth-panel{ display:none; flex-direction:column; gap:14px; }
+  .auth-panel.active{ display:flex; }
+  .auth-error{ font-family:var(--font-mono); font-size:.72rem; color:var(--burgundy); min-height:14px; }
+  .account-summary{ display:flex; flex-direction:column; gap:6px; padding:14px 0; border-bottom:1px solid var(--line); margin-bottom:14px; }
+  .account-summary .email{ font-family:var(--font-display); font-size:1.05rem; }
+  .account-orders{ max-height:260px; overflow-y:auto; display:flex; flex-direction:column; gap:10px; }
+  .account-order-item{ border:1px solid var(--line); padding:10px 12px; font-size:.8rem; }
+  .account-order-item .aid{ font-family:var(--font-mono); font-weight:700; color:var(--emerald-deep); }
+  .account-order-item button{ margin-top:6px; background:none; border:1px solid var(--emerald-deep); color:var(--emerald-deep); padding:5px 10px; font-size:.64rem; text-transform:uppercase; letter-spacing:.06em; }
+
+  /* ===== SHIPMENT TRACKING ===== */
+  .track-form{ display:flex; gap:8px; margin-bottom:18px; }
+  .track-form input{ flex:1; border:1px solid var(--line); padding:11px 12px; font-family:var(--font-mono); font-size:.82rem; }
+  .tracking-result{ display:none; flex-direction:column; gap:18px; }
+  .tracking-result.show{ display:flex; }
+  .tracking-head{ display:flex; justify-content:space-between; align-items:baseline; font-family:var(--font-mono); font-size:.78rem; color:var(--gold-dim); }
+  .tracking-head .tid{ font-weight:700; color:var(--emerald-deep); font-size:.95rem; }
+  .timeline{ display:flex; flex-direction:column; }
+  .tl-step{ display:flex; gap:14px; position:relative; padding-bottom:26px; }
+  .tl-step:last-child{ padding-bottom:0; }
+  .tl-dot-wrap{ display:flex; flex-direction:column; align-items:center; }
+  .tl-dot{ width:16px; height:16px; border-radius:50%; border:2px solid var(--line); background:#fff; flex-shrink:0; }
+  .tl-step.done .tl-dot{ background:var(--emerald-deep); border-color:var(--emerald-deep); }
+  .tl-step.current .tl-dot{ background:var(--gold); border-color:var(--gold); box-shadow:0 0 0 4px rgba(198,154,78,.25); }
+  .tl-line{ width:2px; flex:1; background:var(--line); margin-top:2px; }
+  .tl-step.done .tl-line{ background:var(--emerald-deep); }
+  .tl-body .tl-title{ font-family:var(--font-display); font-size:.98rem; }
+  .tl-step:not(.done):not(.current) .tl-body{ opacity:.45; }
+  .tl-body .tl-time{ font-family:var(--font-mono); font-size:.68rem; color:var(--gold-dim); margin-top:2px; }
+  .track-empty{ text-align:center; padding:20px 10px; color:#8a806c; font-size:.85rem; }
+
   @media(max-width:860px){
     nav.links{display:none;}
     .hamburger{display:flex;}
@@ -424,6 +625,7 @@
 </style>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
 </head>
 <body>
 
@@ -438,7 +640,27 @@
     <a href="#footer">Contact</a>
   </nav>
   <div class="nav-actions">
-    <button class="icon-btn" onclick="openCart()" aria-label="Open cart">
+    <select class="lang-select" id="langSelect" onchange="setLanguage(this.value)" aria-label="Select language">
+      <option value="en">EN</option>
+      <option value="hi">हिन्दी</option>
+      <option value="fr">Français</option>
+      <option value="es">Español</option>
+    </select>
+    <button class="icon-btn" onclick="openSearch()" aria-label="Search" data-analytics="nav-search">
+      <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+    </button>
+    <button class="icon-btn" onclick="openAccount()" aria-label="Account" data-analytics="nav-account">
+      <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="3.5"/><path d="M4.5 20c1.6-4 4.6-6 7.5-6s5.9 2 7.5 6"/></svg>
+      <span class="badge" id="accountBadge" style="display:none;">•</span>
+    </button>
+    <button class="icon-btn" onclick="openWishlist()" aria-label="Open wishlist" data-analytics="nav-wishlist">
+      <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7.5-4.6-10-9.2C0.4 8.4 2 4.5 5.6 4c2-.3 3.7.7 6.4 3.4C14.7 4.7 16.4 3.7 18.4 4c3.6.5 5.2 4.4 3.6 7.8-2.5 4.6-10 9.2-10 9.2z"/></svg>
+      <span class="badge" id="wishBadge">0</span>
+    </button>
+    <button class="icon-btn theme-btn" onclick="toggleDarkMode()" aria-label="Toggle dark mode" data-analytics="nav-theme">
+      <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.8A9 9 0 1 1 11.2 3 7 7 0 0 0 21 12.8z"/></svg>
+    </button>
+    <button class="icon-btn" onclick="openCart()" aria-label="Open cart" data-analytics="nav-cart">
       <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h2l2.4 12.2a2 2 0 0 0 2 1.8h8.4a2 2 0 0 0 2-1.6L22 8H6"/><circle cx="9.5" cy="21" r="1"/><circle cx="17.5" cy="21" r="1"/></svg>
       <span class="badge" id="cartBadge">0</span>
     </button>
@@ -447,6 +669,51 @@
     </button>
   </div>
 </header>
+
+<!-- ===== FLASH SALE COUNTDOWN ===== -->
+<div class="flash-bar" id="flashBar">
+  <span>🔥 FLASH SALE — up to 30% off select pieces</span>
+  <div class="fb-timer" id="fbTimer">
+    <span id="fbH">00</span><span id="fbM">00</span><span id="fbS">00</span>
+  </div>
+</div>
+
+<!-- ===== LIVE SEARCH OVERLAY ===== -->
+<div class="search-overlay" id="searchOverlay" onclick="if(event.target===this) closeSearch()">
+  <div class="search-box">
+    <input type="text" id="searchInput" placeholder="Search the collection..." oninput="runLiveSearch()" autocomplete="off">
+    <div class="search-results" id="searchResults"></div>
+  </div>
+</div>
+
+<!-- ===== WHATSAPP + LIVE CHAT ===== -->
+<div class="float-stack">
+  <button class="float-btn chat-btn" onclick="toggleChat()" aria-label="Live chat" data-analytics="open-livechat">
+    <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.4 8.4 0 0 1-8.9 8.4 8.6 8.6 0 0 1-3.7-.8L3 21l1.9-5.4a8.3 8.3 0 0 1-.9-3.6A8.4 8.4 0 0 1 12.6 3a8.4 8.4 0 0 1 8.4 8.5z"/></svg>
+  </button>
+  <a class="float-btn whatsapp-btn" href="https://wa.me/917807811257" target="_blank" rel="noopener" aria-label="WhatsApp support" data-analytics="open-whatsapp">
+    <svg viewBox="0 0 32 32"><path d="M16.001 3C9.373 3 4 8.373 4 15c0 2.61.85 5.02 2.29 6.98L4.6 28l6.2-1.63A11.9 11.9 0 0 0 16.001 27C22.63 27 28 21.63 28 15S22.63 3 16.001 3zm0 21.7a9.6 9.6 0 0 1-4.9-1.35l-.35-.21-3.68.97.98-3.58-.23-.37a9.65 9.65 0 1 1 8.18 4.54zm5.3-7.23c-.29-.14-1.71-.84-1.98-.94-.27-.1-.46-.14-.66.15-.2.28-.76.94-.93 1.13-.17.2-.34.22-.63.07-.29-.14-1.22-.45-2.32-1.44-.86-.76-1.44-1.71-1.61-2-.17-.28-.02-.44.13-.58.13-.13.29-.34.43-.5.14-.17.19-.29.29-.48.1-.2.05-.36-.02-.5-.07-.14-.66-1.6-.9-2.18-.24-.58-.48-.5-.66-.5-.17 0-.36-.02-.56-.02-.2 0-.5.07-.77.36-.27.28-1.02 1-1.02 2.44s1.04 2.83 1.19 3.03c.14.2 2.05 3.13 4.98 4.39.7.3 1.24.48 1.66.61.7.22 1.34.19 1.84.11.56-.08 1.71-.7 1.95-1.37.24-.68.24-1.26.17-1.38-.07-.13-.27-.2-.56-.34z"/></svg>
+  </a>
+</div>
+<div class="chat-panel" id="chatPanel">
+  <div class="chat-head"><span>Avenzo Concierge</span><button onclick="toggleChat()">&times;</button></div>
+  <div class="chat-body" id="chatBody">
+    <div class="chat-msg bot">Welcome to Avenzo. How may our concierge assist you today?</div>
+  </div>
+  <div class="chat-input-row">
+    <input type="text" id="chatInput" placeholder="Type a message..." onkeydown="if(event.key==='Enter') sendChatMsg()">
+    <button onclick="sendChatMsg()">Send</button>
+  </div>
+</div>
+
+<!-- ===== WISHLIST DRAWER ===== -->
+<aside class="drawer" id="wishDrawer">
+  <div class="drawer-head">
+    <h3>Your Wishlist</h3>
+    <button class="drawer-close" onclick="closeAllOverlays()">&times;</button>
+  </div>
+  <div class="drawer-body" id="wishBody"></div>
+</aside>
 
 <!-- Mobile nav -->
 <div id="mobileNav" style="display:none; position:fixed; inset:0; background:var(--emerald-deep); z-index:199; flex-direction:column; align-items:center; justify-content:center; gap:34px;">
@@ -488,6 +755,12 @@
 <!-- ===== CATALOG ===== -->
 <section class="catalog" id="catalog">
   <div class="grid" id="productGrid"></div>
+</section>
+
+<!-- ===== RECENTLY VIEWED ===== -->
+<section class="sub-rail-section" id="recentlyViewedSection" style="display:none;">
+  <div class="rail-head"><div><span class="eyebrow">Picked up where you left off</span><h2>Recently Viewed</h2></div></div>
+  <div class="mini-grid" id="recentlyViewedGrid"></div>
 </section>
 
 <!-- ===== STORY BAND ===== -->
@@ -540,6 +813,12 @@
           <div class="field"><label>Price (₹)</label><input required id="p_price" type="number" min="1" placeholder="24999"></div>
           <div class="field"><label>Stock qty</label><input required id="p_stock" type="number" min="0" placeholder="12"></div>
         </div>
+        <div class="form-row">
+          <div class="field"><label>Original price (₹, optional — for discount badge)</label><input id="p_original_price" type="number" min="1" placeholder="e.g. 29999"></div>
+          <div class="field"><label>Mark as Best Seller</label>
+            <select id="p_bestseller"><option value="false">No</option><option value="true">Yes</option></select>
+          </div>
+        </div>
         <div class="form-row full">
           <div class="field"><label>Image URL (optional)</label><input id="p_image" placeholder="https://... leave blank for auto image"></div>
         </div>
@@ -580,7 +859,7 @@
   <div class="table-wrap">
     <h3 style="font-family:var(--font-display); margin-bottom:14px; color:var(--gold-light);">Orders received</h3>
     <table>
-      <thead><tr><th>Order ID</th><th>Customer</th><th>Contact</th><th>Address</th><th>Items</th><th>Total</th><th>Payment</th><th>Status</th><th>Time</th><th>Action</th></tr></thead>
+      <thead><tr><th>Order ID</th><th>Customer</th><th>Contact</th><th>Address</th><th>Items</th><th>Total</th><th>Payment</th><th>Status</th><th>Time</th><th>Tracking</th><th>Action</th></tr></thead>
       <tbody id="ordersTable"></tbody>
     </table>
   </div>
@@ -626,9 +905,11 @@
     </div>
     <div>
       <h4>Support</h4>
+      <a href="#" onclick="openTracking(event)">Track Your Order</a>
       <a href="#">Shipping &amp; Returns</a>
       <a href="#">Authentication</a>
-      <a href="#">Contact Concierge</a>
+      <a href="tel:+917807811257">Call: +91 78078 11257</a>
+      <a href="https://wa.me/917807811257" target="_blank" rel="noopener">WhatsApp: +91 78078 11257</a>
     </div>
   </div>
   <div class="foot-bottom">
@@ -646,10 +927,16 @@
   </div>
   <div class="drawer-body" id="cartBody"></div>
   <div class="drawer-foot" id="cartFoot" style="display:none;">
+    <div class="coupon-row">
+      <input type="text" id="couponCode" placeholder="Coupon code (try WELCOME10)">
+      <button onclick="applyCoupon()">Apply</button>
+    </div>
+    <div class="coupon-msg" id="couponMsg"></div>
     <div class="sub-row"><span>Subtotal</span><span id="cartSubtotal">₹0</span></div>
+    <div class="sub-row" id="cartDiscountRow" style="display:none;"><span>Coupon Discount</span><span id="cartDiscount">-₹0</span></div>
     <div class="sub-row"><span>Concierge Delivery</span><span id="cartShip">₹0</span></div>
     <div class="sub-row total"><span>Total</span><span id="cartTotal">₹0</span></div>
-    <button class="btn btn-gold" onclick="openCheckout()">Proceed to Checkout</button>
+    <button class="btn btn-gold" onclick="openCheckout()" data-analytics="begin-checkout">Proceed to Checkout</button>
   </div>
 </aside>
 
@@ -698,6 +985,66 @@
   </div>
 </div>
 
+<!-- ===== ACCOUNT MODAL ===== -->
+<div class="modal-wrap" id="accountModal">
+  <div class="modal-bg" onclick="closeAllOverlays()"></div>
+  <div class="modal checkout-modal" style="max-width:440px;">
+    <button class="modal-close" onclick="closeAllOverlays()">&times;</button>
+
+    <div id="accountLoggedOut">
+      <span class="eyebrow">Your Account</span>
+      <h2 style="margin-bottom:6px;">Welcome to Avenzo</h2>
+      <div class="auth-tabs">
+        <button class="auth-tab active" id="tabLogin" onclick="switchAuthTab('login')">Sign In</button>
+        <button class="auth-tab" id="tabSignup" onclick="switchAuthTab('signup')">Create Account</button>
+      </div>
+
+      <form class="auth-panel active" id="loginPanel" onsubmit="return handleLogin(event)">
+        <div class="field"><label>Email</label><input required type="email" id="login_email" placeholder="you@example.com"></div>
+        <div class="field"><label>Password</label><input required type="password" id="login_password" placeholder="••••••••"></div>
+        <div class="auth-error" id="loginError"></div>
+        <button type="submit" class="btn btn-gold" style="width:100%;">Sign In</button>
+      </form>
+
+      <form class="auth-panel" id="signupPanel" onsubmit="return handleSignup(event)">
+        <div class="field"><label>Full name</label><input required id="signup_name" placeholder="Aditi Sharma"></div>
+        <div class="field"><label>Email</label><input required type="email" id="signup_email" placeholder="you@example.com"></div>
+        <div class="field"><label>Password</label><input required type="password" id="signup_password" placeholder="Minimum 6 characters" minlength="6"></div>
+        <div class="auth-error" id="signupError"></div>
+        <button type="submit" class="btn btn-gold" style="width:100%;">Create Account</button>
+      </form>
+      <p style="font-size:.72rem; color:#8a806c; margin-top:14px;">Accounts are used to save your order history and speed up checkout.</p>
+    </div>
+
+    <div id="accountLoggedIn" style="display:none;">
+      <span class="eyebrow">Your Account</span>
+      <div class="account-summary">
+        <span class="email" id="accountEmailDisplay"></span>
+        <button class="btn btn-ghost" style="align-self:flex-start; border-color:var(--emerald-deep); color:var(--emerald-deep); padding:8px 16px;" onclick="handleLogout()">Sign Out</button>
+      </div>
+      <h4 style="font-family:var(--font-display); margin-bottom:10px;">Order History</h4>
+      <div class="account-orders" id="accountOrdersList"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== ORDER TRACKING MODAL ===== -->
+<div class="modal-wrap" id="trackingModal">
+  <div class="modal-bg" onclick="closeAllOverlays()"></div>
+  <div class="modal checkout-modal" style="max-width:520px;">
+    <button class="modal-close" onclick="closeAllOverlays()">&times;</button>
+    <span class="eyebrow">Shipment Tracking</span>
+    <h2 style="margin-bottom:16px;">Track Your Order</h2>
+    <div class="track-form">
+      <input type="text" id="trackOrderId" placeholder="Order ID (e.g. AVZ123456)">
+      <button class="btn btn-gold" onclick="trackOrder()">Track</button>
+    </div>
+    <div id="trackingBody">
+      <p class="track-empty">Enter your order ID above to see live shipment status.</p>
+    </div>
+  </div>
+</div>
+
 <!-- ===== CONSOLE ACCESS GATE ===== -->
 <div class="modal-wrap" id="gateModal">
   <div class="modal-bg" onclick="closeAllOverlays()"></div>
@@ -735,6 +1082,37 @@ let products = JSON.parse(JSON.stringify(DEFAULT_PRODUCTS));
 let cart = []; // {productId, qty} — intentionally not persisted
 let orders = []; // completed order records
 
+/* ============ NEW FEATURE STATE ============ */
+let wishlist = JSON.parse(localStorage.getItem('avenzo_wishlist') || '[]');
+let recentlyViewed = JSON.parse(localStorage.getItem('avenzo_recent') || '[]');
+let backInStockRequests = JSON.parse(localStorage.getItem('avenzo_notify') || '[]');
+let reviews = JSON.parse(localStorage.getItem('avenzo_reviews') || '{}'); // {productId:[{name,rating,comment,time}]}
+let appliedCoupon = null;
+let currentUser = null; // {uid, email, name} when signed in via Firebase Auth
+let currentLang = localStorage.getItem('avenzo_lang') || 'en';
+const COUPONS = {
+  'WELCOME10': { type:'percent', value:10, label:'10% off your order' },
+  'AVENZO500': { type:'flat', value:500, label:'₹500 off orders above ₹5,000' },
+  'FREESHIP': { type:'shipping', value:0, label:'Free concierge delivery' }
+};
+const WHATSAPP_NUMBER = '917807811257';
+const FLASH_SALE_END = Date.now() + (1000*60*60*6); // 6 hour rolling flash sale window
+
+/* ============ ANALYTICS-READY STRUCTURE ============ */
+// Central event tracker — wire up to GA4 / any dataLayer-based analytics tool.
+window.dataLayer = window.dataLayer || [];
+function trackEvent(name, payload){
+  const event = Object.assign({ event:name, time:new Date().toISOString() }, payload || {});
+  window.dataLayer.push(event);
+  console.debug('[analytics]', event);
+}
+document.addEventListener('DOMContentLoaded', function(){
+  document.body.addEventListener('click', function(e){
+    const el = e.target.closest('[data-analytics]');
+    if(el) trackEvent('ui_click', { element: el.getAttribute('data-analytics') });
+  });
+});
+
 /* ============ PERSISTENCE ============ */
 // Fill these in with your Firebase project's config to make products, suppliers,
 // and orders shared live across every visitor (not just your own browser).
@@ -750,6 +1128,8 @@ const FIREBASE_CONFIG = {
 
 let useFirebase = false;
 let db = null;
+let auth = null;
+let useFirebaseAuth = false;
 const STORAGE_KEY = 'avenzo_store_v2';
 let storageAvailable = true;
 
@@ -760,6 +1140,14 @@ if(FIREBASE_CONFIG.apiKey && typeof firebase !== 'undefined'){
     useFirebase = true;
   }catch(e){
     console.error('Firebase failed to initialize — falling back to local storage.', e);
+  }
+  try{
+    if(firebase.auth){
+      auth = firebase.auth();
+      useFirebaseAuth = true;
+    }
+  }catch(e){
+    console.error('Firebase Auth failed to initialize — accounts will be unavailable.', e);
   }
 }
 
@@ -814,6 +1202,13 @@ async function initFirebaseSync(){
   db.collection('orders').onSnapshot(snap=>{
     orders = snap.docs.map(d=>d.data()).sort((a,b)=>(b.time_ms||0)-(a.time_ms||0));
     renderOrdersTable();
+    if(currentUser) renderAccountOrders();
+    const trackModal = document.getElementById('trackingModal');
+    if(trackModal && trackModal.classList.contains('show')){
+      const id = (document.getElementById('trackOrderId').value || '').trim().toUpperCase();
+      const o = orders.find(x=>x.id===id);
+      if(o) renderTrackingResult(o);
+    }
   }, err => console.error('Orders sync error:', err));
 }
 
@@ -849,9 +1244,13 @@ function persistSupplierDelete(id){
   if(useFirebase) db.collection('suppliers').doc(id).delete().catch(e=>console.error('Delete supplier failed:', e));
   else saveStore();
 }
+const TRACKING_STAGES = ['Order Placed','Processing','Shipped','Out for Delivery','Delivered'];
 function persistOrderAdd(order){
+  if(currentUser){ order.userId = currentUser.uid; order.userEmail = currentUser.email; }
+  order.trackingStage = order.trackingStage || 0;
   orders.unshift(order);
   renderOrdersTable();
+  if(currentUser) renderAccountOrders();
   if(useFirebase) db.collection('orders').doc(order.id).set(order).catch(e=>console.error('Save order failed:', e));
   else saveStore();
 }
@@ -860,6 +1259,19 @@ function persistOrderStatus(id, status){
   if(o) o.status = status;
   renderOrdersTable();
   if(useFirebase) db.collection('orders').doc(id).update({status}).catch(e=>console.error('Update order failed:', e));
+  else saveStore();
+}
+function persistOrderTrackingStage(id, stage){
+  const o = orders.find(x=>x.id===id);
+  if(!o) return;
+  stage = Math.max(0, Math.min(TRACKING_STAGES.length-1, stage));
+  o.trackingStage = stage;
+  if(stage === TRACKING_STAGES.length-1) o.status = 'Paid';
+  renderOrdersTable();
+  if(document.getElementById('trackingModal').classList.contains('show') && document.getElementById('trackOrderId').value.trim().toUpperCase() === id){
+    renderTrackingResult(o);
+  }
+  if(useFirebase) db.collection('orders').doc(id).update({trackingStage: stage, status: o.status}).catch(e=>console.error('Update tracking failed:', e));
   else saveStore();
 }
 
@@ -892,7 +1304,7 @@ function resetStoreToDefaults(){
   showToast('Store reset to defaults');
 }
 const SHIPPING_THRESHOLD = 50000;
-const SHIPPING_FEE = 5;
+const SHIPPING_FEE = 10;
 
 const inr = n => '₹' + Number(n).toLocaleString('en-IN');
 const supplierName = id => (suppliers.find(s=>s.id===id)||{}).name || 'Unassigned';
@@ -906,6 +1318,35 @@ function toggleMobileNav(){
   const nav = document.getElementById('mobileNav');
   nav.style.display = nav.style.display === 'flex' ? 'none' : 'flex';
 }
+
+/* ============ DARK MODE ============ */
+function toggleDarkMode(){
+  const isDark = document.body.getAttribute('data-theme') === 'dark';
+  document.body.setAttribute('data-theme', isDark ? 'light' : 'dark');
+  localStorage.setItem('avenzo_theme', isDark ? 'light' : 'dark');
+  trackEvent('theme_toggle', { theme: isDark ? 'light' : 'dark' });
+}
+(function initTheme(){
+  const saved = localStorage.getItem('avenzo_theme');
+  if(saved === 'dark') document.body.setAttribute('data-theme', 'dark');
+})();
+
+/* ============ FLASH SALE COUNTDOWN ============ */
+function tickFlashSale(){
+  const remain = Math.max(0, FLASH_SALE_END - Date.now());
+  const h = Math.floor(remain / 3600000);
+  const m = Math.floor((remain % 3600000) / 60000);
+  const s = Math.floor((remain % 60000) / 1000);
+  const pad = n => String(n).padStart(2,'0');
+  const hEl = document.getElementById('fbH'), mEl = document.getElementById('fbM'), sEl = document.getElementById('fbS');
+  if(hEl){ hEl.textContent = pad(h); mEl.textContent = pad(m); sEl.textContent = pad(s); }
+  if(remain <= 0){
+    const bar = document.getElementById('flashBar');
+    if(bar) bar.style.display = 'none';
+  }
+}
+tickFlashSale();
+setInterval(tickFlashSale, 1000);
 
 /* ============ CATEGORY RAIL ============ */
 const catIcons = {
@@ -934,12 +1375,24 @@ function renderGrid(){
   const published = products.filter(p=>p.published !== false);
   const list = activeCategory==='All' ? published : published.filter(p=>p.category===activeCategory);
   if(!list.length){ grid.innerHTML = '<p style="grid-column:1/-1; text-align:center; color:#8a806c; padding:60px 0;">No pieces in this category yet.</p>'; return; }
-  grid.innerHTML = list.map(p => `
-    <div class="card">
+  grid.innerHTML = list.map(p => {
+    const discountPct = p.originalPrice && p.originalPrice > p.price ? Math.round(100*(p.originalPrice-p.price)/p.originalPrice) : 0;
+    const rating = getAvgRating(p.id);
+    const outOfStock = p.stock <= 0;
+    return `
+    <div class="card" data-analytics="product-card" data-product-id="${p.id}" data-category="${p.category}" data-price="${p.price}">
       <div class="card-media">
         <img src="${p.image}" alt="${p.name}" loading="lazy">
-        <span class="card-tag">${p.category}</span>
-        <button class="quick-btn" onclick="openQuickView('${p.id}')" aria-label="Quick view">
+        <div class="badge-row">
+          <span class="card-tag">${p.category}</span>
+          ${discountPct>0 ? `<span class="discount-badge">${discountPct}% OFF</span>` : ''}
+          ${p.bestSeller ? `<span class="bestseller-badge">🔥 Best Seller</span>` : ''}
+        </div>
+        <span class="viewers-tag"><span class="dot"></span>${getViewerCount(p.id)} people viewing</span>
+        <button class="wish-btn ${isWishlisted(p.id)?'active':''}" onclick="toggleWishlist('${p.id}')" aria-label="Wishlist" data-analytics="wishlist-toggle">
+          <svg viewBox="0 0 24 24" stroke-width="1.6"><path d="M12 21s-7.5-4.6-10-9.2C0.4 8.4 2 4.5 5.6 4c2-.3 3.7.7 6.4 3.4C14.7 4.7 16.4 3.7 18.4 4c3.6.5 5.2 4.4 3.6 7.8-2.5 4.6-10 9.2-10 9.2z"/></svg>
+        </button>
+        <button class="quick-btn" onclick="openQuickView('${p.id}')" aria-label="Quick view" data-analytics="quick-view">
           <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6"><path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/></svg>
         </button>
       </div>
@@ -947,27 +1400,67 @@ function renderGrid(){
         <span class="supplier">${supplierName(p.supplier)}</span>
         <h3>${p.name}</h3>
         <p class="desc">${p.desc}</p>
-        ${p.stock<=4 ? `<span class="stock-low">Only ${p.stock} left</span>` : ''}
+        <div class="rating-row"><span class="stars">${starString(rating.avg)}</span> ${rating.avg} (${rating.count})</div>
+        ${outOfStock ? `<span class="stock-out">Out of stock</span>
+          <div class="notify-row">
+            <input type="email" id="notify_email_${p.id}" placeholder="Email for restock alert">
+            <button onclick="requestBackInStock('${p.id}')">Notify Me</button>
+          </div>`
+          : (p.stock<=4 ? `<span class="stock-low">Only ${p.stock} left</span>` : '')}
+        <span class="estimate-line">${estimatedDeliveryText()}</span>
         <div class="card-foot">
-          <span class="price">${inr(p.price)}</span>
-          <button class="add-btn" onclick="addToCart('${p.id}')">Add</button>
+          <span class="price">${discountPct>0 ? `<span class="orig-price">${inr(p.originalPrice)}</span>` : ''}${inr(p.price)}</span>
+          <button class="add-btn" onclick="addToCart('${p.id}')" ${outOfStock?'disabled style="opacity:.4; cursor:not-allowed;"':''} data-analytics="add-to-cart">Add</button>
         </div>
       </div>
-    </div>`).join('');
+    </div>`;
+  }).join('');
 }
 
 /* ============ QUICK VIEW ============ */
 function openQuickView(id){
   const p = products.find(x=>x.id===id);
+  if(!p) return;
+  recordRecentlyViewed(id);
+  trackEvent('view_item', { product_id:id, product_name:p.name, price:p.price });
+  const discountPct = p.originalPrice && p.originalPrice > p.price ? Math.round(100*(p.originalPrice-p.price)/p.originalPrice) : 0;
+  const rating = getAvgRating(p.id);
+  const outOfStock = p.stock <= 0;
   document.getElementById('qvContent').innerHTML = `
     <img src="${p.image}" alt="${p.name}">
     <div class="qv-info">
-      <span class="supplier">${supplierName(p.supplier)}</span>
+      <div style="display:flex; justify-content:space-between; align-items:flex-start;">
+        <span class="supplier">${supplierName(p.supplier)}</span>
+        <button class="wish-btn" style="position:static;" onclick="toggleWishlist('${p.id}')">
+          <svg viewBox="0 0 24 24" stroke-width="1.6" class="${isWishlisted(p.id)?'active':''}" style="${isWishlisted(p.id)?'fill:var(--burgundy);':''}"><path d="M12 21s-7.5-4.6-10-9.2C0.4 8.4 2 4.5 5.6 4c2-.3 3.7.7 6.4 3.4C14.7 4.7 16.4 3.7 18.4 4c3.6.5 5.2 4.4 3.6 7.8-2.5 4.6-10 9.2-10 9.2z"/></svg>
+        </button>
+      </div>
       <h2>${p.name}</h2>
-      <span class="price">${inr(p.price)}</span>
+      <div class="rating-row"><span class="stars">${starString(rating.avg)}</span> ${rating.avg} out of 5 (${rating.count} reviews)</div>
+      <div>
+        ${p.bestSeller ? '<span class="bestseller-badge">🔥 Best Seller</span> ' : ''}
+        ${discountPct>0 ? `<span class="discount-badge">${discountPct}% OFF</span>` : ''}
+      </div>
+      <span class="price">${discountPct>0 ? `<span class="orig-price">${inr(p.originalPrice)}</span>` : ''}${inr(p.price)}</span>
       <p class="desc">${p.desc}</p>
-      <p class="desc">${p.stock} in stock &middot; Category: ${p.category}</p>
-      <button class="btn btn-gold" onclick="addToCart('${p.id}'); closeAllOverlays();">Add to Selection</button>
+      <p class="desc">${outOfStock ? 'Currently out of stock' : p.stock + ' in stock'} &middot; Category: ${p.category}</p>
+      <span class="viewers-tag" style="position:static; display:inline-flex; width:fit-content;"><span class="dot"></span>${getViewerCount(p.id)} people viewing this right now</span>
+      <span class="estimate-line">${estimatedDeliveryText()}</span>
+      ${outOfStock
+        ? `<div class="notify-row"><input type="email" id="notify_email_${p.id}" placeholder="Email for restock alert"><button onclick="requestBackInStock('${p.id}')">Notify Me</button></div>`
+        : `<button class="btn btn-gold" onclick="addToCart('${p.id}'); closeAllOverlays();" data-analytics="quickview-add-to-cart">Add to Selection</button>`}
+
+      <div class="delivery-calc">
+        <span class="eyebrow" style="color:var(--gold-dim); display:block; margin-bottom:8px;">Delivery Calculator</span>
+        <div class="dc-row">
+          <input type="text" id="dc_pincode" placeholder="Enter PIN code" maxlength="6">
+          <button onclick="calcDelivery()">Check</button>
+        </div>
+        <div class="dc-result" id="dc_result"></div>
+      </div>
+
+      ${renderRelatedProducts(p)}
+      ${renderReviewsBlock(p)}
     </div>`;
   showOverlay('qvModal');
 }
@@ -1027,11 +1520,247 @@ function renderCart(){
   }).join('');
 
   const sub = cartSubtotal();
-  const ship = sub >= SHIPPING_THRESHOLD || sub===0 ? 0 : SHIPPING_FEE;
+  const discount = couponDiscount(sub);
+  let ship = sub >= SHIPPING_THRESHOLD || sub===0 ? 0 : SHIPPING_FEE;
+  if(appliedCoupon && appliedCoupon.type === 'shipping') ship = 0;
   document.getElementById('cartSubtotal').textContent = inr(sub);
+  const discRow = document.getElementById('cartDiscountRow');
+  if(discount > 0){ discRow.style.display='flex'; document.getElementById('cartDiscount').textContent = '-' + inr(discount); }
+  else { discRow.style.display='none'; }
   document.getElementById('cartShip').textContent = ship===0 ? 'Complimentary' : inr(ship);
-  document.getElementById('cartTotal').textContent = inr(sub+ship);
+  document.getElementById('cartTotal').textContent = inr(Math.max(0, sub - discount + ship));
   foot.style.display = 'block';
+}
+
+/* ============ WISHLIST ============ */
+function saveWishlist(){ localStorage.setItem('avenzo_wishlist', JSON.stringify(wishlist)); }
+function isWishlisted(id){ return wishlist.includes(id); }
+function toggleWishlist(id){
+  if(wishlist.includes(id)){ wishlist = wishlist.filter(w=>w!==id); showToast('Removed from wishlist'); }
+  else { wishlist.push(id); showToast('Added to wishlist'); trackEvent('add_to_wishlist', { product_id:id }); }
+  saveWishlist();
+  renderGrid();
+  renderWishlistDrawer();
+}
+function renderWishlistDrawer(){
+  const badge = document.getElementById('wishBadge');
+  if(badge) badge.textContent = wishlist.length;
+  const body = document.getElementById('wishBody');
+  if(!body) return;
+  if(!wishlist.length){ body.innerHTML = '<div class="empty-cart">Your wishlist is empty.<br>Tap the heart on any piece to save it here.</div>'; return; }
+  body.innerHTML = wishlist.map(id=>{
+    const p = products.find(x=>x.id===id);
+    if(!p) return '';
+    return `
+    <div class="cart-item">
+      <img src="${p.image}" alt="${p.name}">
+      <div class="ci-info">
+        <span class="n">${p.name}</span>
+        <span class="p">${inr(p.price)}</span>
+        <button class="add-btn" style="align-self:flex-start; margin-top:4px;" onclick="addToCart('${p.id}')">Add to Selection</button>
+        <button class="rm" onclick="toggleWishlist('${p.id}')">Remove</button>
+      </div>
+    </div>`;
+  }).join('');
+}
+function openWishlist(){
+  renderWishlistDrawer();
+  document.getElementById('overlay').classList.add('show');
+  document.getElementById('wishDrawer').classList.add('open');
+  document.body.style.overflow='hidden';
+  trackEvent('view_wishlist', { count: wishlist.length });
+}
+
+/* ============ RECENTLY VIEWED ============ */
+function recordRecentlyViewed(id){
+  recentlyViewed = [id, ...recentlyViewed.filter(r=>r!==id)].slice(0,10);
+  localStorage.setItem('avenzo_recent', JSON.stringify(recentlyViewed));
+  renderRecentlyViewed();
+}
+function renderRecentlyViewed(){
+  const section = document.getElementById('recentlyViewedSection');
+  const grid = document.getElementById('recentlyViewedGrid');
+  if(!section || !grid) return;
+  const list = recentlyViewed.map(id=>products.find(p=>p.id===id)).filter(Boolean);
+  if(!list.length){ section.style.display='none'; return; }
+  section.style.display='block';
+  grid.innerHTML = list.map(p=>`
+    <div class="mini-card" onclick="openQuickView('${p.id}')" data-analytics="recently-viewed-click">
+      <img src="${p.image}" alt="${p.name}">
+      <div class="mn">${p.name}</div>
+      <div class="mp">${inr(p.price)}</div>
+    </div>`).join('');
+}
+
+/* ============ RELATED PRODUCTS ============ */
+function renderRelatedProducts(product){
+  const related = products.filter(p=>p.published!==false && p.category===product.category && p.id!==product.id).slice(0,6);
+  if(!related.length) return '';
+  return `
+  <div class="sub-rail-section" style="padding:6px 0 0;">
+    <div class="rail-head" style="padding:0; margin-bottom:10px;"><h2 style="font-size:1rem;">You may also like</h2></div>
+    <div class="mini-grid" style="padding:4px 0 4px;">
+      ${related.map(p=>`
+        <div class="mini-card" onclick="openQuickView('${p.id}')" data-analytics="related-product-click">
+          <img src="${p.image}" alt="${p.name}">
+          <div class="mn">${p.name}</div>
+          <div class="mp">${inr(p.price)}</div>
+        </div>`).join('')}
+    </div>
+  </div>`;
+}
+
+/* ============ LIVE VIEWERS ("N people viewing") ============ */
+const viewerCounts = {};
+function getViewerCount(id){
+  if(!viewerCounts[id]) viewerCounts[id] = 6 + Math.floor(Math.random()*19); // 6-24
+  return viewerCounts[id];
+}
+
+/* ============ RATINGS & REVIEWS ============ */
+function getReviews(id){ return reviews[id] || []; }
+function getAvgRating(id){
+  const list = getReviews(id);
+  if(!list.length) return { avg: (4 + Math.random()*0.9).toFixed(1), count: 8 + Math.floor(Math.random()*40) };
+  const avg = list.reduce((s,r)=>s+r.rating,0) / list.length;
+  return { avg: avg.toFixed(1), count: list.length };
+}
+function starString(avg){
+  const rounded = Math.round(avg);
+  return '★'.repeat(rounded) + '☆'.repeat(5-rounded);
+}
+function renderReviewsBlock(product){
+  const list = getReviews(product.id);
+  const listHtml = list.length ? list.map(r=>`
+    <div class="review-item">
+      <span class="rn">${r.name}</span> &nbsp; <span class="rs">${starString(r.rating)}</span>
+      <div class="rc">${r.comment}</div>
+    </div>`).join('') : '<p style="font-size:.8rem; color:#8a806c;">Be the first to review this piece.</p>';
+  return `
+  <div class="reviews-block">
+    <h4>Reviews &amp; Ratings</h4>
+    ${listHtml}
+    <div class="review-form">
+      <select id="rev_rating">
+        <option value="5">★★★★★ Excellent</option>
+        <option value="4">★★★★☆ Very good</option>
+        <option value="3">★★★☆☆ Good</option>
+        <option value="2">★★☆☆☆ Fair</option>
+        <option value="1">★☆☆☆☆ Poor</option>
+      </select>
+      <input type="text" id="rev_name" placeholder="Your name">
+      <textarea id="rev_comment" rows="2" placeholder="Share your experience with this piece"></textarea>
+      <button onclick="submitReview('${product.id}')">Submit Review</button>
+    </div>
+  </div>`;
+}
+function submitReview(productId){
+  const name = document.getElementById('rev_name').value.trim() || 'Anonymous';
+  const rating = Number(document.getElementById('rev_rating').value);
+  const comment = document.getElementById('rev_comment').value.trim();
+  if(!comment){ showToast('Please add a short comment'); return; }
+  if(!reviews[productId]) reviews[productId] = [];
+  reviews[productId].push({ name, rating, comment, time: new Date().toLocaleString('en-IN') });
+  localStorage.setItem('avenzo_reviews', JSON.stringify(reviews));
+  trackEvent('submit_review', { product_id: productId, rating });
+  showToast('Thank you for your review');
+  openQuickView(productId);
+}
+
+/* ============ BACK IN STOCK NOTIFICATIONS ============ */
+function requestBackInStock(productId){
+  const input = document.getElementById('notify_email_' + productId);
+  const email = input ? input.value.trim() : '';
+  if(!email || !email.includes('@')){ showToast('Please enter a valid email'); return; }
+  backInStockRequests.push({ productId, email, time: new Date().toLocaleString('en-IN') });
+  localStorage.setItem('avenzo_notify', JSON.stringify(backInStockRequests));
+  trackEvent('back_in_stock_request', { product_id: productId });
+  showToast("We'll email you the moment it's back");
+  if(input) input.value = '';
+}
+
+/* ============ DELIVERY CALCULATOR & ESTIMATED DELIVERY ============ */
+function estimatedDeliveryText(){
+  const min = new Date(Date.now() + 3*86400000);
+  const max = new Date(Date.now() + 6*86400000);
+  const fmt = d => d.toLocaleDateString('en-IN', { day:'numeric', month:'short' });
+  return `Estimated delivery: ${fmt(min)} – ${fmt(max)}`;
+}
+function calcDelivery(){
+  const pin = document.getElementById('dc_pincode').value.trim();
+  const resultEl = document.getElementById('dc_result');
+  if(!/^\d{6}$/.test(pin)){ resultEl.textContent = 'Please enter a valid 6-digit PIN code.'; return; }
+  const days = 3 + (Number(pin[0]) % 4); // simple deterministic variability by pincode
+  const eta = new Date(Date.now() + days*86400000);
+  resultEl.textContent = `Delivers to ${pin} by ${eta.toLocaleDateString('en-IN',{day:'numeric',month:'short'})} · Delivery charge ₹${SHIPPING_FEE} (free above ${inr(SHIPPING_THRESHOLD)})`;
+  trackEvent('delivery_check', { pincode: pin });
+}
+
+/* ============ LIVE SEARCH ============ */
+function openSearch(){
+  document.getElementById('searchOverlay').classList.add('show');
+  document.getElementById('searchInput').value = '';
+  document.getElementById('searchResults').innerHTML = '';
+  setTimeout(()=>document.getElementById('searchInput').focus(), 50);
+  document.body.style.overflow = 'hidden';
+}
+function closeSearch(){
+  document.getElementById('searchOverlay').classList.remove('show');
+  document.body.style.overflow = '';
+}
+function runLiveSearch(){
+  const q = document.getElementById('searchInput').value.trim().toLowerCase();
+  const resultsEl = document.getElementById('searchResults');
+  if(!q){ resultsEl.innerHTML = ''; return; }
+  const matches = products.filter(p=> p.published!==false && (p.name.toLowerCase().includes(q) || p.category.toLowerCase().includes(q) || (p.desc||'').toLowerCase().includes(q)) ).slice(0,10);
+  if(!matches.length){ resultsEl.innerHTML = '<div class="search-empty">No pieces found for "' + q + '"</div>'; return; }
+  resultsEl.innerHTML = matches.map(p=>`
+    <div class="search-result-item" onclick="closeSearch(); openQuickView('${p.id}');" data-analytics="search-result-click">
+      <img src="${p.image}" alt="${p.name}">
+      <div><div class="sn">${p.name}</div><div class="sp">${inr(p.price)} · ${p.category}</div></div>
+    </div>`).join('');
+  trackEvent('search', { query: q, results: matches.length });
+}
+
+/* ============ COUPONS ============ */
+function applyCoupon(){
+  const codeInput = document.getElementById('couponCode');
+  const msgEl = document.getElementById('couponMsg');
+  const code = codeInput.value.trim().toUpperCase();
+  const c = COUPONS[code];
+  if(!c){ msgEl.textContent = 'Invalid or expired coupon code.'; msgEl.className='coupon-msg err'; appliedCoupon = null; renderCart(); return; }
+  appliedCoupon = Object.assign({ code }, c);
+  msgEl.textContent = `Applied: ${c.label}`;
+  msgEl.className = 'coupon-msg ok';
+  trackEvent('apply_coupon', { code });
+  renderCart();
+}
+function couponDiscount(sub){
+  if(!appliedCoupon) return 0;
+  if(appliedCoupon.type === 'percent') return Math.round(sub * appliedCoupon.value / 100);
+  if(appliedCoupon.type === 'flat') return sub >= 5000 ? appliedCoupon.value : 0;
+  return 0;
+}
+
+/* ============ LIVE CHAT WIDGET ============ */
+function toggleChat(){
+  const panel = document.getElementById('chatPanel');
+  panel.classList.toggle('open');
+  if(panel.classList.contains('open')) trackEvent('open_livechat', {});
+}
+function sendChatMsg(){
+  const input = document.getElementById('chatInput');
+  const msg = input.value.trim();
+  if(!msg) return;
+  const body = document.getElementById('chatBody');
+  body.insertAdjacentHTML('beforeend', `<div class="chat-msg user">${msg}</div>`);
+  input.value = '';
+  body.scrollTop = body.scrollHeight;
+  trackEvent('livechat_message', { length: msg.length });
+  setTimeout(()=>{
+    body.insertAdjacentHTML('beforeend', `<div class="chat-msg bot">Thank you — a member of our concierge team will respond shortly. For immediate help, message us on WhatsApp at +91 7807811257.</div>`);
+    body.scrollTop = body.scrollHeight;
+  }, 700);
 }
 
 /* ============ OVERLAYS ============ */
@@ -1043,9 +1772,11 @@ function showOverlay(modalId){
 function closeAllOverlays(){
   document.getElementById('overlay').classList.remove('show');
   document.getElementById('cartDrawer').classList.remove('open');
+  document.getElementById('wishDrawer').classList.remove('open');
   document.getElementById('qvModal').classList.remove('show');
   document.getElementById('checkoutModal').classList.remove('show');
   document.getElementById('gateModal').classList.remove('show');
+  closeSearch();
   document.body.style.overflow='';
 }
 function openCart(){
@@ -1093,7 +1824,9 @@ function buildOrderSummary(paymentMethod){
     return p ? `${p.name} x${c.qty} — ${inr(p.price*c.qty)}` : '';
   }).join('\n');
   const sub = cartSubtotal();
-  const ship = sub >= SHIPPING_THRESHOLD ? 0 : SHIPPING_FEE;
+  const discount = couponDiscount(sub);
+  let ship = sub >= SHIPPING_THRESHOLD ? 0 : SHIPPING_FEE;
+  if(appliedCoupon && appliedCoupon.type === 'shipping') ship = 0;
   return {
     customer_name: document.getElementById('co_name').value.trim(),
     customer_email: document.getElementById('co_email').value.trim(),
@@ -1101,8 +1834,10 @@ function buildOrderSummary(paymentMethod){
     delivery_address: document.getElementById('co_address').value.trim(),
     items: items,
     subtotal: inr(sub),
+    coupon: appliedCoupon ? appliedCoupon.code : 'none',
+    discount: inr(discount),
     shipping: ship===0 ? 'Complimentary' : inr(ship),
-    total: inr(sub+ship),
+    total: inr(Math.max(0, sub-discount+ship)),
     payment_method: paymentMethod,
     order_time: new Date().toLocaleString('en-IN')
   };
@@ -1110,7 +1845,9 @@ function buildOrderSummary(paymentMethod){
 
 function recordOrder(paymentMethod, status){
   const sub = cartSubtotal();
-  const ship = sub >= SHIPPING_THRESHOLD ? 0 : SHIPPING_FEE;
+  const discount = couponDiscount(sub);
+  let ship = sub >= SHIPPING_THRESHOLD ? 0 : SHIPPING_FEE;
+  if(appliedCoupon && appliedCoupon.type === 'shipping') ship = 0;
   const itemsList = cart.map(c=>{
     const p = products.find(x=>x.id===c.productId);
     return p ? `${p.name} x${c.qty}` : '';
@@ -1123,12 +1860,14 @@ function recordOrder(paymentMethod, status){
     email: document.getElementById('co_email').value.trim(),
     address: document.getElementById('co_address').value.trim(),
     items: itemsList,
-    total: sub+ship,
+    total: Math.max(0, sub-discount+ship),
     method: paymentMethod,
     status: status,
     time: new Date().toLocaleString('en-IN'),
     time_ms: now
   });
+  trackEvent('purchase', { order_total: Math.max(0, sub-discount+ship), payment_method: paymentMethod });
+  appliedCoupon = null;
 }
 
 async function notifyOrder(paymentMethod){
@@ -1158,8 +1897,10 @@ const MERCHANT_NAME = 'Avenzo Official';
 
 function renderUpiPayment(){
   const sub = cartSubtotal();
-  const ship = sub >= SHIPPING_THRESHOLD ? 0 : SHIPPING_FEE;
-  const total = sub + ship;
+  const discount = couponDiscount(sub);
+  let ship = sub >= SHIPPING_THRESHOLD ? 0 : SHIPPING_FEE;
+  if(appliedCoupon && appliedCoupon.type === 'shipping') ship = 0;
+  const total = Math.max(0, sub - discount + ship);
   const note = 'Avenzo Order ' + Date.now().toString().slice(-6);
   const upiUrl = `upi://pay?pa=${encodeURIComponent(UPI_ID)}&pn=${encodeURIComponent(MERCHANT_NAME)}&am=${total}&cu=INR&tn=${encodeURIComponent(note)}`;
   document.getElementById('upiQr').src = `https://api.qrserver.com/v1/create-qr-code/?size=170x170&data=${encodeURIComponent(upiUrl)}`;
@@ -1182,13 +1923,17 @@ function confirmUpiOrder(){
 function openCheckout(){
   if(!cart.length){ showToast('Your selection is empty'); return; }
   const sub = cartSubtotal();
-  const ship = sub >= SHIPPING_THRESHOLD ? 0 : SHIPPING_FEE;
+  const discount = couponDiscount(sub);
+  let ship = sub >= SHIPPING_THRESHOLD ? 0 : SHIPPING_FEE;
+  if(appliedCoupon && appliedCoupon.type === 'shipping') ship = 0;
   document.getElementById('coSummary').innerHTML = `
     <div class="row"><span>Items (${cart.reduce((s,c)=>s+c.qty,0)})</span><span>${inr(sub)}</span></div>
+    ${discount>0 ? `<div class="row"><span>Coupon (${appliedCoupon.code})</span><span>-${inr(discount)}</span></div>` : ''}
     <div class="row"><span>Concierge Delivery</span><span>${ship===0?'Complimentary':inr(ship)}</span></div>
-    <div class="row total"><span>Total Payable</span><span>${inr(sub+ship)}</span></div>`;
+    <div class="row total"><span>Total Payable</span><span>${inr(Math.max(0, sub-discount+ship))}</span></div>`;
   document.getElementById('cartDrawer').classList.remove('open');
   renderUpiPayment();
+  trackEvent('begin_checkout', { value: sub-discount+ship, items: cart.length });
   showOverlay('checkoutModal');
 }
 
@@ -1234,10 +1979,12 @@ function closeConsole(){
 function renderOrdersTable(){
   const tbody = document.getElementById('ordersTable');
   if(!orders.length){
-    tbody.innerHTML = `<tr><td colspan="10" style="text-align:center; padding:24px; color:rgba(247,241,228,.4);">No orders yet.</td></tr>`;
+    tbody.innerHTML = `<tr><td colspan="11" style="text-align:center; padding:24px; color:rgba(247,241,228,.4);">No orders yet.</td></tr>`;
     return;
   }
-  tbody.innerHTML = orders.map(o=>`
+  tbody.innerHTML = orders.map(o=>{
+    const stage = o.trackingStage || 0;
+    return `
     <tr>
       <td>${o.id}</td>
       <td>${o.name || '—'}</td>
@@ -1248,8 +1995,9 @@ function renderOrdersTable(){
       <td>${o.method}</td>
       <td><span class="status-badge status-${o.status==='Paid'?'paid':'pending'}">${o.status}</span></td>
       <td style="white-space:nowrap;">${o.time}</td>
+      <td style="white-space:nowrap;">${TRACKING_STAGES[stage]}${stage < TRACKING_STAGES.length-1 ? `<br><button onclick="persistOrderTrackingStage('${o.id}', ${stage+1})">Advance to ${TRACKING_STAGES[stage+1]}</button>` : ''}</td>
       <td>${o.status!=='Paid' ? `<button onclick="confirmOrderPayment('${o.id}')">Mark Confirmed</button>` : ''}</td>
-    </tr>`).join('');
+    </tr>`;}).join('');
 }
 function confirmOrderPayment(orderId){
   persistOrderStatus(orderId, 'Paid');
@@ -1302,11 +2050,14 @@ document.getElementById('productForm').addEventListener('submit', function(e){
   e.preventDefault();
   const id = 'p' + Date.now();
   const image = document.getElementById('p_image').value.trim() || `https://source.unsplash.com/600x750/?luxury,${encodeURIComponent(document.getElementById('p_category').value)}`;
+  const origPriceVal = Number(document.getElementById('p_original_price').value) || null;
   persistProductAdd({
     id,
     name: document.getElementById('p_name').value.trim(),
     category: document.getElementById('p_category').value,
     price: Number(document.getElementById('p_price').value),
+    originalPrice: origPriceVal,
+    bestSeller: document.getElementById('p_bestseller').value === 'true',
     stock: Number(document.getElementById('p_stock').value),
     supplier: document.getElementById('p_supplier').value,
     image,
@@ -1333,14 +2084,252 @@ document.getElementById('supplierForm').addEventListener('submit', function(e){
   showConsoleToast('supplierToast', 'Supplier added.');
 });
 
+/* ============ USER ACCOUNTS (Firebase Auth) ============ */
+function openAccount(){
+  showOverlay('accountModal');
+  if(currentUser) renderAccountOrders();
+}
+function switchAuthTab(tab){
+  document.getElementById('tabLogin').classList.toggle('active', tab==='login');
+  document.getElementById('tabSignup').classList.toggle('active', tab==='signup');
+  document.getElementById('loginPanel').classList.toggle('active', tab==='login');
+  document.getElementById('signupPanel').classList.toggle('active', tab==='signup');
+}
+function handleLogin(e){
+  e.preventDefault();
+  const errEl = document.getElementById('loginError');
+  errEl.textContent = '';
+  if(!useFirebaseAuth){ errEl.textContent = 'Accounts are unavailable right now — please try again later.'; return false; }
+  const email = document.getElementById('login_email').value.trim();
+  const password = document.getElementById('login_password').value;
+  auth.signInWithEmailAndPassword(email, password)
+    .then(()=>{ showToast('Welcome back!'); closeAllOverlays(); })
+    .catch(err=>{ errEl.textContent = friendlyAuthError(err); });
+  return false;
+}
+function handleSignup(e){
+  e.preventDefault();
+  const errEl = document.getElementById('signupError');
+  errEl.textContent = '';
+  if(!useFirebaseAuth){ errEl.textContent = 'Accounts are unavailable right now — please try again later.'; return false; }
+  const name = document.getElementById('signup_name').value.trim();
+  const email = document.getElementById('signup_email').value.trim();
+  const password = document.getElementById('signup_password').value;
+  auth.createUserWithEmailAndPassword(email, password)
+    .then(cred => cred.user.updateProfile({displayName: name}))
+    .then(()=>{ showToast('Account created — welcome to Avenzo!'); closeAllOverlays(); })
+    .catch(err=>{ errEl.textContent = friendlyAuthError(err); });
+  return false;
+}
+function handleLogout(){
+  if(useFirebaseAuth) auth.signOut();
+  currentUser = null;
+  updateAccountUI();
+  showToast('Signed out');
+}
+function friendlyAuthError(err){
+  const map = {
+    'auth/email-already-in-use': 'An account with this email already exists — try signing in instead.',
+    'auth/invalid-email': 'Please enter a valid email address.',
+    'auth/weak-password': 'Password should be at least 6 characters.',
+    'auth/user-not-found': 'No account found with this email.',
+    'auth/wrong-password': 'Incorrect password — please try again.',
+    'auth/invalid-credential': 'Incorrect email or password.'
+  };
+  return map[err.code] || (err.message || 'Something went wrong — please try again.');
+}
+function updateAccountUI(){
+  const badge = document.getElementById('accountBadge');
+  const loggedOut = document.getElementById('accountLoggedOut');
+  const loggedIn = document.getElementById('accountLoggedIn');
+  if(currentUser){
+    badge.style.display = 'flex';
+    loggedOut.style.display = 'none';
+    loggedIn.style.display = 'block';
+    document.getElementById('accountEmailDisplay').textContent = currentUser.name || currentUser.email;
+    renderAccountOrders();
+  } else {
+    badge.style.display = 'none';
+    loggedOut.style.display = 'block';
+    loggedIn.style.display = 'none';
+  }
+}
+function renderAccountOrders(){
+  const list = document.getElementById('accountOrdersList');
+  if(!currentUser){ list.innerHTML = ''; return; }
+  const myOrders = orders.filter(o => o.userId === currentUser.uid || o.email === currentUser.email);
+  if(!myOrders.length){ list.innerHTML = '<p class="track-empty">No orders yet — your purchases will appear here.</p>'; return; }
+  list.innerHTML = myOrders.map(o => `
+    <div class="account-order-item">
+      <div class="aid">${o.id}</div>
+      <div>${o.items || ''}</div>
+      <div>${inr(o.total)} — ${TRACKING_STAGES[o.trackingStage || 0]}</div>
+      <button onclick="openTracking(null, '${o.id}')">Track this order</button>
+    </div>`).join('');
+}
+if(useFirebaseAuth){
+  auth.onAuthStateChanged(user=>{
+    if(user){
+      currentUser = { uid: user.uid, email: user.email, name: user.displayName || '' };
+    } else {
+      currentUser = null;
+    }
+    updateAccountUI();
+  });
+} else {
+  document.addEventListener('DOMContentLoaded', updateAccountUI);
+}
+
+/* ============ SHIPMENT TRACKING ============ */
+function openTracking(e, orderId){
+  if(e) e.preventDefault();
+  showOverlay('trackingModal');
+  if(orderId){
+    document.getElementById('trackOrderId').value = orderId;
+    trackOrder();
+  }
+}
+function trackOrder(){
+  const id = document.getElementById('trackOrderId').value.trim().toUpperCase();
+  const body = document.getElementById('trackingBody');
+  if(!id){ body.innerHTML = '<p class="track-empty">Enter your order ID above to see live shipment status.</p>'; return; }
+  const order = orders.find(o => o.id.toUpperCase() === id);
+  if(!order){
+    body.innerHTML = '<p class="track-empty">No order found with that ID. Double-check the ID from your confirmation.</p>';
+    return;
+  }
+  renderTrackingResult(order);
+}
+function renderTrackingResult(order){
+  const body = document.getElementById('trackingBody');
+  const stage = order.trackingStage || 0;
+  body.innerHTML = `
+    <div class="tracking-result show">
+      <div class="tracking-head">
+        <span>Order <span class="tid">${order.id}</span></span>
+        <span>${order.time || ''}</span>
+      </div>
+      <div class="timeline">
+        ${TRACKING_STAGES.map((label, i) => `
+          <div class="tl-step ${i < stage ? 'done' : ''} ${i === stage ? 'current' : ''}">
+            <div class="tl-dot-wrap">
+              <div class="tl-dot"></div>
+              ${i < TRACKING_STAGES.length-1 ? '<div class="tl-line"></div>' : ''}
+            </div>
+            <div class="tl-body">
+              <div class="tl-title">${label}</div>
+              ${i === stage ? '<div class="tl-time">Current status</div>' : ''}
+            </div>
+          </div>`).join('')}
+      </div>
+    </div>`;
+}
+
+/* ============ MULTI-LANGUAGE SUPPORT ============ */
+const I18N = {
+  en: {
+    'nav.collection':'Collection', 'nav.maison':'Maison', 'nav.contact':'Contact',
+    'hero.cta1':'Explore the Collection', 'hero.cta2':'Our Story',
+    'search.placeholder':'Search the collection...',
+    'cart.title':'Your Selection', 'cart.subtotal':'Subtotal', 'cart.shipping':'Concierge Delivery',
+    'cart.total':'Total', 'cart.checkout':'Proceed to Checkout', 'cart.empty':'Your selection is empty',
+    'track.title':'Track Your Order', 'track.placeholder':'Order ID (e.g. AVZ123456)', 'track.button':'Track'
+  },
+  hi: {
+    'nav.collection':'संग्रह', 'nav.maison':'हमारे बारे में', 'nav.contact':'संपर्क करें',
+    'hero.cta1':'संग्रह देखें', 'hero.cta2':'हमारी कहानी',
+    'search.placeholder':'संग्रह में खोजें...',
+    'cart.title':'आपकी चयन सूची', 'cart.subtotal':'उप-योग', 'cart.shipping':'डिलीवरी शुल्क',
+    'cart.total':'कुल राशि', 'cart.checkout':'चेकआउट करें', 'cart.empty':'आपकी चयन सूची खाली है',
+    'track.title':'अपना ऑर्डर ट्रैक करें', 'track.placeholder':'ऑर्डर आईडी (जैसे AVZ123456)', 'track.button':'ट्रैक करें'
+  },
+  fr: {
+    'nav.collection':'Collection', 'nav.maison':'Maison', 'nav.contact':'Contact',
+    'hero.cta1':'Explorer la collection', 'hero.cta2':'Notre histoire',
+    'search.placeholder':'Rechercher dans la collection...',
+    'cart.title':'Votre sélection', 'cart.subtotal':'Sous-total', 'cart.shipping':'Livraison',
+    'cart.total':'Total', 'cart.checkout':'Passer à la caisse', 'cart.empty':'Votre sélection est vide',
+    'track.title':'Suivre votre commande', 'track.placeholder':'ID de commande (ex. AVZ123456)', 'track.button':'Suivre'
+  },
+  es: {
+    'nav.collection':'Colección', 'nav.maison':'Casa', 'nav.contact':'Contacto',
+    'hero.cta1':'Explorar la colección', 'hero.cta2':'Nuestra historia',
+    'search.placeholder':'Buscar en la colección...',
+    'cart.title':'Tu selección', 'cart.subtotal':'Subtotal', 'cart.shipping':'Envío',
+    'cart.total':'Total', 'cart.checkout':'Finalizar compra', 'cart.empty':'Tu selección está vacía',
+    'track.title':'Rastrea tu pedido', 'track.placeholder':'ID de pedido (ej. AVZ123456)', 'track.button':'Rastrear'
+  }
+};
+function t(key){
+  return (I18N[currentLang] && I18N[currentLang][key]) || I18N.en[key] || key;
+}
+function setLanguage(lang){
+  currentLang = lang;
+  localStorage.setItem('avenzo_lang', lang);
+  applyLanguage();
+}
+function applyLanguage(){
+  document.getElementById('langSelect').value = currentLang;
+  document.querySelectorAll('nav.links a')[0].textContent = t('nav.collection');
+  document.querySelectorAll('nav.links a')[1].textContent = t('nav.maison');
+  document.querySelectorAll('nav.links a')[2].textContent = t('nav.contact');
+  const searchInput = document.getElementById('searchInput');
+  if(searchInput) searchInput.placeholder = t('search.placeholder');
+  const heroCtas = document.querySelectorAll('.hero-ctas a, .hero-ctas button');
+  if(heroCtas[0]) heroCtas[0].textContent = t('hero.cta1');
+  if(heroCtas[1]) heroCtas[1].textContent = t('hero.cta2');
+  const cartHead = document.querySelector('.drawer-head h3');
+  if(cartHead) cartHead.textContent = t('cart.title');
+  const trackHeading = document.querySelector('#trackingModal h2');
+  if(trackHeading) trackHeading.textContent = t('track.title');
+  const trackInput = document.getElementById('trackOrderId');
+  if(trackInput) trackInput.placeholder = t('track.placeholder');
+  renderCart();
+}
+
+/* ============ IMAGE OPTIMIZATION ============ */
+// Appends responsive sizing/quality/format params to Unsplash "source" URLs so
+// the browser downloads an appropriately sized, compressed image instead of a
+// full-resolution original, and tags every product image for lazy, async decoding.
+function optimizeImageUrl(url, width){
+  if(!url) return url;
+  try{
+    if(url.includes('images.unsplash.com') || url.includes('source.unsplash.com')){
+      const sep = url.includes('?') ? '&' : '?';
+      return `${url}${sep}auto=format&fit=crop&w=${width}&q=60`;
+    }
+  }catch(e){ /* leave non-Unsplash URLs untouched */ }
+  return url;
+}
+function applyImageOptimizations(root){
+  (root || document).querySelectorAll('img:not([data-optimized])').forEach(img=>{
+    img.loading = img.loading || 'lazy';
+    img.decoding = 'async';
+    if(!img.closest('#upiQr') && img.id !== 'upiQr'){
+      const targetWidth = img.closest('.card-media') ? 500 : (img.closest('.mini-card') ? 340 : 700);
+      if(img.src) img.src = optimizeImageUrl(img.src, targetWidth);
+    }
+    img.setAttribute('data-optimized', '1');
+  });
+}
+// Watch the whole document for newly-rendered product images (cards, cart, wishlist,
+// quick view, etc. are all re-rendered dynamically) and optimize them as they appear.
+const imageOptimizerObserver = new MutationObserver(()=> applyImageOptimizations());
+imageOptimizerObserver.observe(document.body, { childList: true, subtree: true });
+
 /* ============ INIT ============ */
 renderRail();
 renderGrid();
 renderCart();
+renderWishlistDrawer();
+renderRecentlyViewed();
 renderSupplierOptions();
 renderSupplierTable();
 renderProductTable();
 renderOrdersTable();
+applyLanguage();
+applyImageOptimizations();
+if(!useFirebaseAuth) updateAccountUI();
 </script>
 </body>
 </html>
