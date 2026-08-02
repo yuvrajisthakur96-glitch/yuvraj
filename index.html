@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>AVENZO OFFICIAL — The House Collection</title>
-<link rel="preconnect" href"https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Manrope:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 
 <style>
@@ -627,6 +627,12 @@
     .catalog{padding:16px 4vw 70px;}
     .flash-bar{flex-direction:column; gap:6px; padding:10px 4vw;}
     .search-overlay{padding-top:8vh;}
+    .stat-row{gap:24px; flex-wrap:wrap;}
+    .console-head{align-items:flex-start;}
+    .track-section{padding:50px 5vw;}
+    .track-form{flex-direction:column;}
+    .track-form input, .track-form button{width:100%;}
+    .tracker-step .lbl{font-size:.58rem;}
   }
   @media(max-width:480px){
     .icon-btn{width:32px; height:32px;}
@@ -637,6 +643,15 @@
     .mini-card{flex:0 0 130px;}
     .mini-card img{width:130px; height:155px;}
     .co-summary, .delivery-calc{padding:10px 12px;}
+    .stat-row{gap:18px;}
+    .stat-row .num{font-size:1.5rem;}
+    .foot-grid{grid-template-columns:1fr;}
+    .newsletter{flex-direction:column; border:none; gap:8px;}
+    .newsletter input{border:1px solid rgba(247,241,228,.25);}
+    .newsletter button{border:1px solid rgba(247,241,228,.25);}
+    .tracker-steps{overflow-x:auto; padding-bottom:6px;}
+    .tracker-step{min-width:64px;}
+    .tracker-step .lbl{font-size:.52rem;}
   }
   @media(prefers-reduced-motion: reduce){
     *{animation-duration:.001ms !important; transition-duration:.001ms !important;}
