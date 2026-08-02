@@ -41,9 +41,6 @@
   body[data-theme="dark"] .co-summary{ background:#151109; }
   body[data-theme="dark"] .rail-section{ background:var(--ivory); }
   body[data-theme="dark"] .modal-close{ background:#1c1710; color:var(--espresso); }
-  body[data-theme="dark"] .account-order-item{ border-color:var(--line); }
-  body[data-theme="dark"] .tl-dot{ background:#1c1710; }
-  body[data-theme="dark"] .track-empty{ color:#8a806c; }
   *{box-sizing:border-box; margin:0; padding:0;}
   html{scroll-behavior:smooth;}
   body{
@@ -575,41 +572,6 @@
   .lang-select option{ color:var(--espresso); background:var(--ivory); }
   header.solid .lang-select{ border-color:var(--line); }
 
-  /* ===== ACCOUNT MODAL ===== */
-  .auth-tabs{ display:flex; gap:0; margin-bottom:20px; border-bottom:1px solid var(--line); }
-  .auth-tab{ flex:1; text-align:center; padding:10px 0; font-family:var(--font-mono); font-size:.72rem; letter-spacing:.08em; text-transform:uppercase; color:var(--gold-dim); background:none; border:none; border-bottom:2px solid transparent; }
-  .auth-tab.active{ color:var(--emerald-deep); border-bottom-color:var(--gold); }
-  .auth-panel{ display:none; flex-direction:column; gap:14px; }
-  .auth-panel.active{ display:flex; }
-  .auth-error{ font-family:var(--font-mono); font-size:.72rem; color:var(--burgundy); min-height:14px; }
-  .account-summary{ display:flex; flex-direction:column; gap:6px; padding:14px 0; border-bottom:1px solid var(--line); margin-bottom:14px; }
-  .account-summary .email{ font-family:var(--font-display); font-size:1.05rem; }
-  .account-orders{ max-height:260px; overflow-y:auto; display:flex; flex-direction:column; gap:10px; }
-  .account-order-item{ border:1px solid var(--line); padding:10px 12px; font-size:.8rem; }
-  .account-order-item .aid{ font-family:var(--font-mono); font-weight:700; color:var(--emerald-deep); }
-  .account-order-item button{ margin-top:6px; background:none; border:1px solid var(--emerald-deep); color:var(--emerald-deep); padding:5px 10px; font-size:.64rem; text-transform:uppercase; letter-spacing:.06em; }
-
-  /* ===== SHIPMENT TRACKING ===== */
-  .track-form{ display:flex; gap:8px; margin-bottom:18px; }
-  .track-form input{ flex:1; border:1px solid var(--line); padding:11px 12px; font-family:var(--font-mono); font-size:.82rem; }
-  .tracking-result{ display:none; flex-direction:column; gap:18px; }
-  .tracking-result.show{ display:flex; }
-  .tracking-head{ display:flex; justify-content:space-between; align-items:baseline; font-family:var(--font-mono); font-size:.78rem; color:var(--gold-dim); }
-  .tracking-head .tid{ font-weight:700; color:var(--emerald-deep); font-size:.95rem; }
-  .timeline{ display:flex; flex-direction:column; }
-  .tl-step{ display:flex; gap:14px; position:relative; padding-bottom:26px; }
-  .tl-step:last-child{ padding-bottom:0; }
-  .tl-dot-wrap{ display:flex; flex-direction:column; align-items:center; }
-  .tl-dot{ width:16px; height:16px; border-radius:50%; border:2px solid var(--line); background:#fff; flex-shrink:0; }
-  .tl-step.done .tl-dot{ background:var(--emerald-deep); border-color:var(--emerald-deep); }
-  .tl-step.current .tl-dot{ background:var(--gold); border-color:var(--gold); box-shadow:0 0 0 4px rgba(198,154,78,.25); }
-  .tl-line{ width:2px; flex:1; background:var(--line); margin-top:2px; }
-  .tl-step.done .tl-line{ background:var(--emerald-deep); }
-  .tl-body .tl-title{ font-family:var(--font-display); font-size:.98rem; }
-  .tl-step:not(.done):not(.current) .tl-body{ opacity:.45; }
-  .tl-body .tl-time{ font-family:var(--font-mono); font-size:.68rem; color:var(--gold-dim); margin-top:2px; }
-  .track-empty{ text-align:center; padding:20px 10px; color:#8a806c; font-size:.85rem; }
-
   @media(max-width:860px){
     nav.links{display:none;}
     .hamburger{display:flex;}
@@ -648,10 +610,6 @@
     </select>
     <button class="icon-btn" onclick="openSearch()" aria-label="Search" data-analytics="nav-search">
       <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
-    </button>
-    <button class="icon-btn" onclick="openAccount()" aria-label="Account" data-analytics="nav-account">
-      <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="3.5"/><path d="M4.5 20c1.6-4 4.6-6 7.5-6s5.9 2 7.5 6"/></svg>
-      <span class="badge" id="accountBadge" style="display:none;">•</span>
     </button>
     <button class="icon-btn" onclick="openWishlist()" aria-label="Open wishlist" data-analytics="nav-wishlist">
       <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7.5-4.6-10-9.2C0.4 8.4 2 4.5 5.6 4c2-.3 3.7.7 6.4 3.4C14.7 4.7 16.4 3.7 18.4 4c3.6.5 5.2 4.4 3.6 7.8-2.5 4.6-10 9.2-10 9.2z"/></svg>
@@ -905,8 +863,6 @@
     </div>
     <div>
       <h4>Support</h4>
-      <a href="#" onclick="openTracking(event)">Track Your Order</a>
-      <a href="#">Shipping &amp; Returns</a>
       <a href="#">Authentication</a>
       <a href="tel:+917807811257">Call: +91 78078 11257</a>
       <a href="https://wa.me/917807811257" target="_blank" rel="noopener">WhatsApp: +91 78078 11257</a>
@@ -985,66 +941,6 @@
   </div>
 </div>
 
-<!-- ===== ACCOUNT MODAL ===== -->
-<div class="modal-wrap" id="accountModal">
-  <div class="modal-bg" onclick="closeAllOverlays()"></div>
-  <div class="modal checkout-modal" style="max-width:440px;">
-    <button class="modal-close" onclick="closeAllOverlays()">&times;</button>
-
-    <div id="accountLoggedOut">
-      <span class="eyebrow">Your Account</span>
-      <h2 style="margin-bottom:6px;">Welcome to Avenzo</h2>
-      <div class="auth-tabs">
-        <button class="auth-tab active" id="tabLogin" onclick="switchAuthTab('login')">Sign In</button>
-        <button class="auth-tab" id="tabSignup" onclick="switchAuthTab('signup')">Create Account</button>
-      </div>
-
-      <form class="auth-panel active" id="loginPanel" onsubmit="return handleLogin(event)">
-        <div class="field"><label>Email</label><input required type="email" id="login_email" placeholder="you@example.com"></div>
-        <div class="field"><label>Password</label><input required type="password" id="login_password" placeholder="••••••••"></div>
-        <div class="auth-error" id="loginError"></div>
-        <button type="submit" class="btn btn-gold" style="width:100%;">Sign In</button>
-      </form>
-
-      <form class="auth-panel" id="signupPanel" onsubmit="return handleSignup(event)">
-        <div class="field"><label>Full name</label><input required id="signup_name" placeholder="Aditi Sharma"></div>
-        <div class="field"><label>Email</label><input required type="email" id="signup_email" placeholder="you@example.com"></div>
-        <div class="field"><label>Password</label><input required type="password" id="signup_password" placeholder="Minimum 6 characters" minlength="6"></div>
-        <div class="auth-error" id="signupError"></div>
-        <button type="submit" class="btn btn-gold" style="width:100%;">Create Account</button>
-      </form>
-      <p style="font-size:.72rem; color:#8a806c; margin-top:14px;">Accounts are used to save your order history and speed up checkout.</p>
-    </div>
-
-    <div id="accountLoggedIn" style="display:none;">
-      <span class="eyebrow">Your Account</span>
-      <div class="account-summary">
-        <span class="email" id="accountEmailDisplay"></span>
-        <button class="btn btn-ghost" style="align-self:flex-start; border-color:var(--emerald-deep); color:var(--emerald-deep); padding:8px 16px;" onclick="handleLogout()">Sign Out</button>
-      </div>
-      <h4 style="font-family:var(--font-display); margin-bottom:10px;">Order History</h4>
-      <div class="account-orders" id="accountOrdersList"></div>
-    </div>
-  </div>
-</div>
-
-<!-- ===== ORDER TRACKING MODAL ===== -->
-<div class="modal-wrap" id="trackingModal">
-  <div class="modal-bg" onclick="closeAllOverlays()"></div>
-  <div class="modal checkout-modal" style="max-width:520px;">
-    <button class="modal-close" onclick="closeAllOverlays()">&times;</button>
-    <span class="eyebrow">Shipment Tracking</span>
-    <h2 style="margin-bottom:16px;">Track Your Order</h2>
-    <div class="track-form">
-      <input type="text" id="trackOrderId" placeholder="Order ID (e.g. AVZ123456)">
-      <button class="btn btn-gold" onclick="trackOrder()">Track</button>
-    </div>
-    <div id="trackingBody">
-      <p class="track-empty">Enter your order ID above to see live shipment status.</p>
-    </div>
-  </div>
-</div>
-
 <!-- ===== CONSOLE ACCESS GATE ===== -->
 <div class="modal-wrap" id="gateModal">
   <div class="modal-bg" onclick="closeAllOverlays()"></div>
@@ -1088,7 +984,6 @@ let recentlyViewed = JSON.parse(localStorage.getItem('avenzo_recent') || '[]');
 let backInStockRequests = JSON.parse(localStorage.getItem('avenzo_notify') || '[]');
 let reviews = JSON.parse(localStorage.getItem('avenzo_reviews') || '{}'); // {productId:[{name,rating,comment,time}]}
 let appliedCoupon = null;
-let currentUser = null; // {uid, email, name} when signed in via Firebase Auth
 let currentLang = localStorage.getItem('avenzo_lang') || 'en';
 const COUPONS = {
   'WELCOME10': { type:'percent', value:10, label:'10% off your order' },
@@ -1128,8 +1023,6 @@ const FIREBASE_CONFIG = {
 
 let useFirebase = false;
 let db = null;
-let auth = null;
-let useFirebaseAuth = false;
 const STORAGE_KEY = 'avenzo_store_v2';
 let storageAvailable = true;
 
@@ -1140,14 +1033,6 @@ if(FIREBASE_CONFIG.apiKey && typeof firebase !== 'undefined'){
     useFirebase = true;
   }catch(e){
     console.error('Firebase failed to initialize — falling back to local storage.', e);
-  }
-  try{
-    if(firebase.auth){
-      auth = firebase.auth();
-      useFirebaseAuth = true;
-    }
-  }catch(e){
-    console.error('Firebase Auth failed to initialize — accounts will be unavailable.', e);
   }
 }
 
@@ -1202,13 +1087,6 @@ async function initFirebaseSync(){
   db.collection('orders').onSnapshot(snap=>{
     orders = snap.docs.map(d=>d.data()).sort((a,b)=>(b.time_ms||0)-(a.time_ms||0));
     renderOrdersTable();
-    if(currentUser) renderAccountOrders();
-    const trackModal = document.getElementById('trackingModal');
-    if(trackModal && trackModal.classList.contains('show')){
-      const id = (document.getElementById('trackOrderId').value || '').trim().toUpperCase();
-      const o = orders.find(x=>x.id===id);
-      if(o) renderTrackingResult(o);
-    }
   }, err => console.error('Orders sync error:', err));
 }
 
@@ -1246,11 +1124,9 @@ function persistSupplierDelete(id){
 }
 const TRACKING_STAGES = ['Order Placed','Processing','Shipped','Out for Delivery','Delivered'];
 function persistOrderAdd(order){
-  if(currentUser){ order.userId = currentUser.uid; order.userEmail = currentUser.email; }
   order.trackingStage = order.trackingStage || 0;
   orders.unshift(order);
   renderOrdersTable();
-  if(currentUser) renderAccountOrders();
   if(useFirebase) db.collection('orders').doc(order.id).set(order).catch(e=>console.error('Save order failed:', e));
   else saveStore();
 }
@@ -1268,9 +1144,6 @@ function persistOrderTrackingStage(id, stage){
   o.trackingStage = stage;
   if(stage === TRACKING_STAGES.length-1) o.status = 'Paid';
   renderOrdersTable();
-  if(document.getElementById('trackingModal').classList.contains('show') && document.getElementById('trackOrderId').value.trim().toUpperCase() === id){
-    renderTrackingResult(o);
-  }
   if(useFirebase) db.collection('orders').doc(id).update({trackingStage: stage, status: o.status}).catch(e=>console.error('Update tracking failed:', e));
   else saveStore();
 }
@@ -2084,147 +1957,6 @@ document.getElementById('supplierForm').addEventListener('submit', function(e){
   showConsoleToast('supplierToast', 'Supplier added.');
 });
 
-/* ============ USER ACCOUNTS (Firebase Auth) ============ */
-function openAccount(){
-  showOverlay('accountModal');
-  if(currentUser) renderAccountOrders();
-}
-function switchAuthTab(tab){
-  document.getElementById('tabLogin').classList.toggle('active', tab==='login');
-  document.getElementById('tabSignup').classList.toggle('active', tab==='signup');
-  document.getElementById('loginPanel').classList.toggle('active', tab==='login');
-  document.getElementById('signupPanel').classList.toggle('active', tab==='signup');
-}
-function handleLogin(e){
-  e.preventDefault();
-  const errEl = document.getElementById('loginError');
-  errEl.textContent = '';
-  if(!useFirebaseAuth){ errEl.textContent = 'Accounts are unavailable right now — please try again later.'; return false; }
-  const email = document.getElementById('login_email').value.trim();
-  const password = document.getElementById('login_password').value;
-  auth.signInWithEmailAndPassword(email, password)
-    .then(()=>{ showToast('Welcome back!'); closeAllOverlays(); })
-    .catch(err=>{ errEl.textContent = friendlyAuthError(err); });
-  return false;
-}
-function handleSignup(e){
-  e.preventDefault();
-  const errEl = document.getElementById('signupError');
-  errEl.textContent = '';
-  if(!useFirebaseAuth){ errEl.textContent = 'Accounts are unavailable right now — please try again later.'; return false; }
-  const name = document.getElementById('signup_name').value.trim();
-  const email = document.getElementById('signup_email').value.trim();
-  const password = document.getElementById('signup_password').value;
-  auth.createUserWithEmailAndPassword(email, password)
-    .then(cred => cred.user.updateProfile({displayName: name}))
-    .then(()=>{ showToast('Account created — welcome to Avenzo!'); closeAllOverlays(); })
-    .catch(err=>{ errEl.textContent = friendlyAuthError(err); });
-  return false;
-}
-function handleLogout(){
-  if(useFirebaseAuth) auth.signOut();
-  currentUser = null;
-  updateAccountUI();
-  showToast('Signed out');
-}
-function friendlyAuthError(err){
-  const map = {
-    'auth/email-already-in-use': 'An account with this email already exists — try signing in instead.',
-    'auth/invalid-email': 'Please enter a valid email address.',
-    'auth/weak-password': 'Password should be at least 6 characters.',
-    'auth/user-not-found': 'No account found with this email.',
-    'auth/wrong-password': 'Incorrect password — please try again.',
-    'auth/invalid-credential': 'Incorrect email or password.'
-  };
-  return map[err.code] || (err.message || 'Something went wrong — please try again.');
-}
-function updateAccountUI(){
-  const badge = document.getElementById('accountBadge');
-  const loggedOut = document.getElementById('accountLoggedOut');
-  const loggedIn = document.getElementById('accountLoggedIn');
-  if(currentUser){
-    badge.style.display = 'flex';
-    loggedOut.style.display = 'none';
-    loggedIn.style.display = 'block';
-    document.getElementById('accountEmailDisplay').textContent = currentUser.name || currentUser.email;
-    renderAccountOrders();
-  } else {
-    badge.style.display = 'none';
-    loggedOut.style.display = 'block';
-    loggedIn.style.display = 'none';
-  }
-}
-function renderAccountOrders(){
-  const list = document.getElementById('accountOrdersList');
-  if(!currentUser){ list.innerHTML = ''; return; }
-  const myOrders = orders.filter(o => o.userId === currentUser.uid || o.email === currentUser.email);
-  if(!myOrders.length){ list.innerHTML = '<p class="track-empty">No orders yet — your purchases will appear here.</p>'; return; }
-  list.innerHTML = myOrders.map(o => `
-    <div class="account-order-item">
-      <div class="aid">${o.id}</div>
-      <div>${o.items || ''}</div>
-      <div>${inr(o.total)} — ${TRACKING_STAGES[o.trackingStage || 0]}</div>
-      <button onclick="openTracking(null, '${o.id}')">Track this order</button>
-    </div>`).join('');
-}
-if(useFirebaseAuth){
-  auth.onAuthStateChanged(user=>{
-    if(user){
-      currentUser = { uid: user.uid, email: user.email, name: user.displayName || '' };
-    } else {
-      currentUser = null;
-    }
-    updateAccountUI();
-  });
-} else {
-  document.addEventListener('DOMContentLoaded', updateAccountUI);
-}
-
-/* ============ SHIPMENT TRACKING ============ */
-function openTracking(e, orderId){
-  if(e) e.preventDefault();
-  showOverlay('trackingModal');
-  if(orderId){
-    document.getElementById('trackOrderId').value = orderId;
-    trackOrder();
-  }
-}
-function trackOrder(){
-  const id = document.getElementById('trackOrderId').value.trim().toUpperCase();
-  const body = document.getElementById('trackingBody');
-  if(!id){ body.innerHTML = '<p class="track-empty">Enter your order ID above to see live shipment status.</p>'; return; }
-  const order = orders.find(o => o.id.toUpperCase() === id);
-  if(!order){
-    body.innerHTML = '<p class="track-empty">No order found with that ID. Double-check the ID from your confirmation.</p>';
-    return;
-  }
-  renderTrackingResult(order);
-}
-function renderTrackingResult(order){
-  const body = document.getElementById('trackingBody');
-  const stage = order.trackingStage || 0;
-  body.innerHTML = `
-    <div class="tracking-result show">
-      <div class="tracking-head">
-        <span>Order <span class="tid">${order.id}</span></span>
-        <span>${order.time || ''}</span>
-      </div>
-      <div class="timeline">
-        ${TRACKING_STAGES.map((label, i) => `
-          <div class="tl-step ${i < stage ? 'done' : ''} ${i === stage ? 'current' : ''}">
-            <div class="tl-dot-wrap">
-              <div class="tl-dot"></div>
-              ${i < TRACKING_STAGES.length-1 ? '<div class="tl-line"></div>' : ''}
-            </div>
-            <div class="tl-body">
-              <div class="tl-title">${label}</div>
-              ${i === stage ? '<div class="tl-time">Current status</div>' : ''}
-            </div>
-          </div>`).join('')}
-      </div>
-    </div>`;
-}
-
 /* ============ MULTI-LANGUAGE SUPPORT ============ */
 const I18N = {
   en: {
@@ -2232,32 +1964,28 @@ const I18N = {
     'hero.cta1':'Explore the Collection', 'hero.cta2':'Our Story',
     'search.placeholder':'Search the collection...',
     'cart.title':'Your Selection', 'cart.subtotal':'Subtotal', 'cart.shipping':'Concierge Delivery',
-    'cart.total':'Total', 'cart.checkout':'Proceed to Checkout', 'cart.empty':'Your selection is empty',
-    'track.title':'Track Your Order', 'track.placeholder':'Order ID (e.g. AVZ123456)', 'track.button':'Track'
+    'cart.total':'Total', 'cart.checkout':'Proceed to Checkout', 'cart.empty':'Your selection is empty'
   },
   hi: {
     'nav.collection':'संग्रह', 'nav.maison':'हमारे बारे में', 'nav.contact':'संपर्क करें',
     'hero.cta1':'संग्रह देखें', 'hero.cta2':'हमारी कहानी',
     'search.placeholder':'संग्रह में खोजें...',
     'cart.title':'आपकी चयन सूची', 'cart.subtotal':'उप-योग', 'cart.shipping':'डिलीवरी शुल्क',
-    'cart.total':'कुल राशि', 'cart.checkout':'चेकआउट करें', 'cart.empty':'आपकी चयन सूची खाली है',
-    'track.title':'अपना ऑर्डर ट्रैक करें', 'track.placeholder':'ऑर्डर आईडी (जैसे AVZ123456)', 'track.button':'ट्रैक करें'
+    'cart.total':'कुल राशि', 'cart.checkout':'चेकआउट करें', 'cart.empty':'आपकी चयन सूची खाली है'
   },
   fr: {
     'nav.collection':'Collection', 'nav.maison':'Maison', 'nav.contact':'Contact',
     'hero.cta1':'Explorer la collection', 'hero.cta2':'Notre histoire',
     'search.placeholder':'Rechercher dans la collection...',
     'cart.title':'Votre sélection', 'cart.subtotal':'Sous-total', 'cart.shipping':'Livraison',
-    'cart.total':'Total', 'cart.checkout':'Passer à la caisse', 'cart.empty':'Votre sélection est vide',
-    'track.title':'Suivre votre commande', 'track.placeholder':'ID de commande (ex. AVZ123456)', 'track.button':'Suivre'
+    'cart.total':'Total', 'cart.checkout':'Passer à la caisse', 'cart.empty':'Votre sélection est vide'
   },
   es: {
     'nav.collection':'Colección', 'nav.maison':'Casa', 'nav.contact':'Contacto',
     'hero.cta1':'Explorar la colección', 'hero.cta2':'Nuestra historia',
     'search.placeholder':'Buscar en la colección...',
     'cart.title':'Tu selección', 'cart.subtotal':'Subtotal', 'cart.shipping':'Envío',
-    'cart.total':'Total', 'cart.checkout':'Finalizar compra', 'cart.empty':'Tu selección está vacía',
-    'track.title':'Rastrea tu pedido', 'track.placeholder':'ID de pedido (ej. AVZ123456)', 'track.button':'Rastrear'
+    'cart.total':'Total', 'cart.checkout':'Finalizar compra', 'cart.empty':'Tu selección está vacía'
   }
 };
 function t(key){
@@ -2280,10 +2008,6 @@ function applyLanguage(){
   if(heroCtas[1]) heroCtas[1].textContent = t('hero.cta2');
   const cartHead = document.querySelector('.drawer-head h3');
   if(cartHead) cartHead.textContent = t('cart.title');
-  const trackHeading = document.querySelector('#trackingModal h2');
-  if(trackHeading) trackHeading.textContent = t('track.title');
-  const trackInput = document.getElementById('trackOrderId');
-  if(trackInput) trackInput.placeholder = t('track.placeholder');
   renderCart();
 }
 
@@ -2329,7 +2053,6 @@ renderProductTable();
 renderOrdersTable();
 applyLanguage();
 applyImageOptimizations();
-if(!useFirebaseAuth) updateAccountUI();
 </script>
 </body>
 </html>
