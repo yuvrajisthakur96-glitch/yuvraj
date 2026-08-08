@@ -104,6 +104,46 @@
   }
   .wish-btn svg{ width:16px; height:16px; stroke:var(--burgundy); fill:none; }
   .wish-btn.active svg{ fill:var(--burgundy); }
+
+  /* ===== 360 PRODUCT VIEWER ===== */
+  .view360-btn{
+    position:absolute; top:58px; right:12px; width:36px; height:36px; border-radius:50%;
+    background:rgba(255,255,255,.9); border:1px solid var(--line); display:flex; align-items:center;
+    justify-content:center; z-index:3; transition:all .25s ease;
+  }
+  .view360-btn svg{ width:17px; height:17px; stroke:var(--emerald-deep); fill:none; }
+  .view-btn{
+    padding:0 14px; height:38px; border:1px solid var(--emerald-deep); background:none;
+    color:var(--emerald-deep); font-size:.68rem; text-transform:uppercase; letter-spacing:.06em;
+    white-space:nowrap;
+  }
+  .view360-overlay{
+    position:fixed; inset:0; background:rgba(11,10,7,.86); z-index:400; display:none;
+    align-items:center; justify-content:center; flex-direction:column; padding:30px 18px;
+  }
+  .view360-overlay.show{ display:flex; }
+  .view360-close{
+    position:absolute; top:20px; right:24px; width:42px; height:42px; border-radius:50%;
+    background:rgba(255,255,255,.12); border:none; color:#fff; font-size:1.4rem; cursor:pointer; z-index:2;
+  }
+  .view360-stage{
+    width:min(440px,84vw); height:min(440px,60vh); perspective:1200px; display:flex;
+    align-items:center; justify-content:center; cursor:grab; touch-action:none;
+  }
+  .view360-stage.dragging{ cursor:grabbing; }
+  .view360-stage img{
+    width:100%; height:100%; object-fit:contain; border-radius:6px; user-select:none; pointer-events:none;
+    filter:drop-shadow(0 24px 40px rgba(0,0,0,.5));
+    transform-style:preserve-3d; will-change:transform;
+  }
+  .view360-hint{ color:rgba(247,241,228,.65); font-family:var(--font-mono); font-size:.72rem; letter-spacing:.05em; margin-top:18px; text-align:center; }
+  .view360-hint b{ color:var(--gold-light); }
+  .view360-name{ color:var(--ivory); font-family:var(--font-display); font-size:1.2rem; margin-top:6px; text-align:center; }
+  .view360-spin-toggle{
+    margin-top:14px; padding:8px 18px; background:none; border:1px solid rgba(198,154,78,.4);
+    color:var(--gold-light); font-family:var(--font-mono); font-size:.68rem; text-transform:uppercase;
+    letter-spacing:.06em; border-radius:20px; cursor:pointer;
+  }
   .estimate-line{ font-family:var(--font-mono); font-size:.68rem; color:#6d7a6b; }
 
   /* ===== RAILS: RECENTLY VIEWED / RELATED ===== */
@@ -591,6 +631,12 @@
   .status-badge{padding:4px 10px; font-family:var(--font-mono); font-size:.62rem; letter-spacing:.06em; text-transform:uppercase; border-radius:20px; display:inline-block;}
   .status-paid{background:rgba(76,150,110,.18); color:#7fd6a1;}
   .status-pending{background:rgba(198,154,78,.18); color:var(--gold-light);}
+  .status-rejected{background:rgba(109,35,48,.22); color:#e79aa6;}
+  .toggle-switch{position:relative; width:46px; height:26px; border-radius:20px; border:1px solid rgba(198,154,78,.4); background:rgba(0,0,0,.25); cursor:pointer; flex:0 0 auto; transition:background .2s ease;}
+  .toggle-switch .knob{position:absolute; top:2px; left:2px; width:20px; height:20px; border-radius:50%; background:var(--ivory-dim); transition:transform .2s ease;}
+  .toggle-switch.on{background:var(--gold-dim);}
+  .toggle-switch.on .knob{transform:translateX(20px); background:var(--gold-light);}
+  .review-pending-tag{font-family:var(--font-mono); font-size:.6rem; text-transform:uppercase; letter-spacing:.06em; color:var(--gold-dim); background:rgba(198,154,78,.15); padding:2px 8px; border-radius:10px; margin-left:8px;}
   .console-toast{margin-top:10px; font-family:var(--font-mono); font-size:.72rem; color:var(--gold-light); min-height:16px;}
 
   /* Success toast */
@@ -817,10 +863,37 @@
     <div>
       <span class="eyebrow">Private &middot; House use only</span>
       <h2>Partner Console</h2>
-      <p>Add new pieces to the collection and manage the suppliers behind them. Changes appear in the storefront instantly for this session.</p>
+      <p>Add new pieces to the collection, manage suppliers, approve reviews before they go live, and control storefront banners. Changes appear on the storefront instantly for this session.</p>
     </div>
     <button class="btn btn-ghost" style="border-color:var(--gold); color:var(--gold-light);" onclick="closeConsole()">Close Console</button>
     <button class="btn btn-ghost" style="border-color:rgba(198,154,78,.4); color:var(--ivory-dim); margin-left:12px;" onclick="resetStoreToDefaults()">Reset to Defaults</button>
+  </div>
+
+  <div class="panel" style="margin-bottom:34px;">
+    <h3>Storefront Settings</h3>
+    <div style="display:flex; align-items:center; justify-content:space-between; gap:16px; margin-top:18px; flex-wrap:wrap;">
+      <div>
+        <div style="font-family:var(--font-mono); font-size:.72rem; letter-spacing:.06em; text-transform:uppercase; color:var(--ivory-dim);">Flash sale banner</div>
+        <div style="font-size:.85rem; margin-top:4px;" id="flashSaleStatusText">Currently showing on the storefront</div>
+      </div>
+      <div class="toggle-switch" id="flashSaleToggle" onclick="toggleFlashSaleBanner()" role="switch" aria-label="Flash sale banner"><div class="knob"></div></div>
+    </div>
+    <div style="display:flex; align-items:center; justify-content:space-between; gap:16px; margin-top:18px; flex-wrap:wrap;">
+      <div>
+        <div style="font-family:var(--font-mono); font-size:.72rem; letter-spacing:.06em; text-transform:uppercase; color:var(--ivory-dim);">Free delivery threshold</div>
+        <div style="font-size:.85rem; margin-top:4px;">Orders above <b id="shipThresholdLabel"></b> ship free. Change it in the script's <code>SHIPPING_THRESHOLD</code> constant.</div>
+      </div>
+    </div>
+    <div class="console-toast" id="settingsToast"></div>
+  </div>
+
+  <div class="table-wrap" style="margin-top:0; margin-bottom:40px;">
+    <h3 style="font-family:var(--font-display); margin-bottom:6px; color:var(--gold-light);">Reviews awaiting approval <span id="reviewsPendingCount" style="font-family:var(--font-mono); font-size:.72rem; color:var(--gold-dim);"></span></h3>
+    <p style="font-size:.8rem; color:var(--ivory-dim); margin-bottom:14px; max-width:560px;">New reviews land here first. Nothing appears on a product page until you approve it.</p>
+    <table>
+      <thead><tr><th>Product</th><th>Rating</th><th>Reviewer</th><th>Comment</th><th>Submitted</th><th>Status</th><th>Action</th></tr></thead>
+      <tbody id="reviewsTable"></tbody>
+    </table>
   </div>
 
   <div class="panels">
@@ -998,6 +1071,17 @@
   </div>
 </div>
 
+<!-- ===== 360 DEGREE PRODUCT VIEWER ===== -->
+<div class="view360-overlay" id="view360Overlay">
+  <button class="view360-close" onclick="close360View()" aria-label="Close 360 view">&times;</button>
+  <div class="view360-stage" id="view360Stage">
+    <img id="view360Img" src="" alt="360 view">
+  </div>
+  <div class="view360-name" id="view360Name"></div>
+  <div class="view360-hint">Drag to spin &middot; or let it <b>auto-rotate</b></div>
+  <button class="view360-spin-toggle" id="view360SpinBtn" onclick="toggle360AutoSpin()">Pause Auto-Spin</button>
+</div>
+
 <!-- ===== CHECKOUT MODAL ===== -->
 <div class="modal-wrap" id="checkoutModal">
   <div class="modal-bg" onclick="closeAllOverlays()"></div>
@@ -1075,7 +1159,26 @@ let orders = []; // completed order records
 let wishlist = JSON.parse(localStorage.getItem('avenzo_wishlist') || '[]');
 let recentlyViewed = JSON.parse(localStorage.getItem('avenzo_recent') || '[]');
 let backInStockRequests = JSON.parse(localStorage.getItem('avenzo_notify') || '[]');
-let reviews = JSON.parse(localStorage.getItem('avenzo_reviews') || '{}'); // {productId:[{name,rating,comment,time}]}
+// reviews: flat array of {id, productId, name, rating, comment, time, status}. status is
+// 'pending' until approved in the console, 'approved' once live on the product page, or
+// 'rejected'. Older data (before moderation existed) was stored as {productId:[...]} with
+// no status — migrate that shape to the new one, treating pre-existing reviews as approved
+// so nothing that was already live disappears.
+let reviews = (function(){
+  const raw = JSON.parse(localStorage.getItem('avenzo_reviews') || '[]');
+  if(Array.isArray(raw)) return raw;
+  const migrated = [];
+  Object.keys(raw).forEach(pid=>{
+    (raw[pid]||[]).forEach(r=>{
+      migrated.push({ id:'rev'+Date.now()+Math.random().toString(36).slice(2,8), productId:pid, name:r.name, rating:r.rating, comment:r.comment, time:r.time, status:'approved' });
+    });
+  });
+  return migrated;
+})();
+// ids of reviews submitted from this browser, so a customer can see their own review
+// marked "Pending approval" even though it isn't public yet.
+let myReviewIds = JSON.parse(localStorage.getItem('avenzo_my_reviews') || '[]');
+let siteSettings = Object.assign({ flashSaleEnabled: true }, JSON.parse(localStorage.getItem('avenzo_settings') || '{}'));
 let appliedCoupon = null;
 let currentLang = localStorage.getItem('avenzo_lang') || 'en';
 const COUPONS = {
@@ -1085,6 +1188,83 @@ const COUPONS = {
 };
 const WHATSAPP_NUMBER = '917807811257';
 const FLASH_SALE_END = Date.now() + (1000*60*60*6); // 6 hour rolling flash sale window
+
+/* ============ 360 DEGREE PRODUCT VIEWER ============ */
+// Note: this creates an interactive spin effect from the product's single photo
+// (drag rotates it in 3D with dynamic lighting/shadow). For a true frame-by-frame
+// 360 photo sequence, swap the transform-based spin for a set of per-angle images.
+let view360State = { rotY: 0, rotX: 0, dragging: false, lastX: 0, lastY: 0, autoSpin: true, rafId: null };
+
+function open360View(id){
+  const p = products.find(x=>x.id===id);
+  if(!p) return;
+  document.getElementById('view360Img').src = p.image;
+  document.getElementById('view360Img').onerror = function(){ this.src='https://placehold.co/600x700/f1ead9/2f2418?text=Image+unavailable'; };
+  document.getElementById('view360Name').textContent = p.name;
+  view360State.rotY = 0; view360State.rotX = 0; view360State.autoSpin = true;
+  document.getElementById('view360SpinBtn').textContent = 'Pause Auto-Spin';
+  document.getElementById('view360Overlay').classList.add('show');
+  document.body.style.overflow = 'hidden';
+  trackEvent('view_360', { product_id: id });
+  start360AutoSpin();
+}
+function close360View(){
+  document.getElementById('view360Overlay').classList.remove('show');
+  document.body.style.overflow = '';
+  cancelAnimationFrame(view360State.rafId);
+}
+function apply360Transform(){
+  const img = document.getElementById('view360Img');
+  if(!img) return;
+  const shade = 1 - Math.min(0.35, Math.abs(view360State.rotY % 360 - 180) / 180 * 0.35);
+  img.style.transform = `perspective(1200px) rotateY(${view360State.rotY}deg) rotateX(${view360State.rotX}deg)`;
+  img.style.filter = `drop-shadow(0 24px 40px rgba(0,0,0,.5)) brightness(${shade})`;
+}
+function start360AutoSpin(){
+  cancelAnimationFrame(view360State.rafId);
+  function step(){
+    if(view360State.autoSpin && !view360State.dragging){
+      view360State.rotY += 0.4;
+      apply360Transform();
+    }
+    view360State.rafId = requestAnimationFrame(step);
+  }
+  step();
+}
+function toggle360AutoSpin(){
+  view360State.autoSpin = !view360State.autoSpin;
+  document.getElementById('view360SpinBtn').textContent = view360State.autoSpin ? 'Pause Auto-Spin' : 'Resume Auto-Spin';
+}
+(function init360Drag(){
+  const stage = document.getElementById('view360Stage');
+  if(!stage) return;
+  function pointerDown(x, y){
+    view360State.dragging = true;
+    view360State.autoSpin = false;
+    document.getElementById('view360SpinBtn').textContent = 'Resume Auto-Spin';
+    view360State.lastX = x; view360State.lastY = y;
+    stage.classList.add('dragging');
+  }
+  function pointerMove(x, y){
+    if(!view360State.dragging) return;
+    const dx = x - view360State.lastX;
+    const dy = y - view360State.lastY;
+    view360State.rotY += dx * 0.5;
+    view360State.rotX = Math.max(-25, Math.min(25, view360State.rotX - dy * 0.2));
+    view360State.lastX = x; view360State.lastY = y;
+    apply360Transform();
+  }
+  function pointerUp(){
+    view360State.dragging = false;
+    stage.classList.remove('dragging');
+  }
+  stage.addEventListener('mousedown', e => pointerDown(e.clientX, e.clientY));
+  window.addEventListener('mousemove', e => pointerMove(e.clientX, e.clientY));
+  window.addEventListener('mouseup', pointerUp);
+  stage.addEventListener('touchstart', e => { const t=e.touches[0]; pointerDown(t.clientX, t.clientY); }, {passive:true});
+  stage.addEventListener('touchmove', e => { const t=e.touches[0]; pointerMove(t.clientX, t.clientY); }, {passive:true});
+  stage.addEventListener('touchend', pointerUp);
+})();
 
 /* ============ ANALYTICS-READY STRUCTURE ============ */
 // Central event tracker — wire up to GA4 / any dataLayer-based analytics tool.
@@ -1181,6 +1361,16 @@ async function initFirebaseSync(){
     orders = snap.docs.map(d=>d.data()).sort((a,b)=>(b.time_ms||0)-(a.time_ms||0));
     renderOrdersTable();
   }, err => console.error('Orders sync error:', err));
+
+  db.collection('reviews').onSnapshot(snap=>{
+    reviews = snap.docs.map(d=>d.data());
+    renderReviewsTable(); renderGrid();
+  }, err => console.error('Reviews sync error:', err));
+
+  db.collection('settings').doc('site').onSnapshot(doc=>{
+    if(doc.exists) siteSettings = Object.assign({ flashSaleEnabled: true }, doc.data());
+    renderSettingsPanel(); applyFlashSaleVisibility();
+  }, err => console.error('Settings sync error:', err));
 }
 
 // ---- Unified mutation helpers used by the console + checkout ----
@@ -1245,6 +1435,38 @@ function persistOrderDelete(id){
   renderOrdersTable();
   if(useFirebase) db.collection('orders').doc(id).delete().catch(e=>console.error('Delete order failed:', e));
   else saveStore();
+}
+
+// ---- Reviews: land as 'pending', only visible on the storefront once approved ----
+function saveReviews(){
+  try{ localStorage.setItem('avenzo_reviews', JSON.stringify(reviews)); }catch(e){}
+}
+function persistReviewAdd(review){
+  reviews.push(review);
+  saveReviews();
+  renderReviewsTable();
+  if(useFirebase) db.collection('reviews').doc(review.id).set(review).catch(e=>console.error('Add review failed:', e));
+}
+function persistReviewStatus(id, status){
+  const r = reviews.find(x=>x.id===id);
+  if(r) r.status = status;
+  saveReviews();
+  renderReviewsTable(); renderGrid();
+  if(useFirebase) db.collection('reviews').doc(id).update({status}).catch(e=>console.error('Update review failed:', e));
+}
+function persistReviewDelete(id){
+  reviews = reviews.filter(x=>x.id!==id);
+  saveReviews();
+  renderReviewsTable(); renderGrid();
+  if(useFirebase) db.collection('reviews').doc(id).delete().catch(e=>console.error('Delete review failed:', e));
+}
+
+// ---- Storefront settings (flash sale banner on/off, etc.) ----
+function persistSettingsUpdate(patch){
+  siteSettings = Object.assign({}, siteSettings, patch);
+  try{ localStorage.setItem('avenzo_settings', JSON.stringify(siteSettings)); }catch(e){}
+  renderSettingsPanel(); applyFlashSaleVisibility();
+  if(useFirebase) db.collection('settings').doc('site').set(siteSettings, {merge:true}).catch(e=>console.error('Settings update failed:', e));
 }
 
 /* ============ CUSTOMER ORDER TRACKING ============ */
@@ -1327,7 +1549,7 @@ function resetStoreToDefaults(){
   }
   showToast('Store reset to defaults');
 }
-const SHIPPING_THRESHOLD = 50000;
+const SHIPPING_THRESHOLD = 599;
 const SHIPPING_FEE = 10;
 
 const inr = n => '₹' + Number(n).toLocaleString('en-IN');
@@ -1356,7 +1578,16 @@ function toggleDarkMode(){
 })();
 
 /* ============ FLASH SALE COUNTDOWN ============ */
+function applyFlashSaleVisibility(){
+  const bar = document.getElementById('flashBar');
+  if(!bar) return;
+  const manuallyOff = siteSettings.flashSaleEnabled === false;
+  const timeUp = Date.now() >= FLASH_SALE_END;
+  bar.style.display = (manuallyOff || timeUp) ? 'none' : '';
+}
 function tickFlashSale(){
+  applyFlashSaleVisibility();
+  if(siteSettings.flashSaleEnabled === false) return;
   const remain = Math.max(0, FLASH_SALE_END - Date.now());
   const h = Math.floor(remain / 3600000);
   const m = Math.floor((remain % 3600000) / 60000);
@@ -1364,10 +1595,6 @@ function tickFlashSale(){
   const pad = n => String(n).padStart(2,'0');
   const hEl = document.getElementById('fbH'), mEl = document.getElementById('fbM'), sEl = document.getElementById('fbS');
   if(hEl){ hEl.textContent = pad(h); mEl.textContent = pad(m); sEl.textContent = pad(s); }
-  if(remain <= 0){
-    const bar = document.getElementById('flashBar');
-    if(bar) bar.style.display = 'none';
-  }
 }
 tickFlashSale();
 setInterval(tickFlashSale, 1000);
@@ -1406,7 +1633,7 @@ function renderGrid(){
     return `
     <div class="card" data-analytics="product-card" data-product-id="${p.id}" data-category="${p.category}" data-price="${p.price}">
       <div class="card-media">
-        <img src="${p.image}" alt="${p.name}" loading="lazy">
+        <img src="${p.image}" alt="${p.name}" loading="lazy" onerror="this.src='https://placehold.co/500x600/f1ead9/2f2418?text=Image+unavailable'">
         <div class="badge-row">
           <span class="card-tag">${p.category}</span>
           ${discountPct>0 ? `<span class="discount-badge">${discountPct}% OFF</span>` : ''}
@@ -1415,6 +1642,9 @@ function renderGrid(){
         <span class="viewers-tag"><span class="dot"></span>${getViewerCount(p.id)} people viewing</span>
         <button class="wish-btn ${isWishlisted(p.id)?'active':''}" onclick="toggleWishlist('${p.id}')" aria-label="Wishlist" data-analytics="wishlist-toggle">
           <svg viewBox="0 0 24 24" stroke-width="1.6"><path d="M12 21s-7.5-4.6-10-9.2C0.4 8.4 2 4.5 5.6 4c2-.3 3.7.7 6.4 3.4C14.7 4.7 16.4 3.7 18.4 4c3.6.5 5.2 4.4 3.6 7.8-2.5 4.6-10 9.2-10 9.2z"/></svg>
+        </button>
+        <button class="view360-btn" onclick="open360View('${p.id}')" aria-label="360 degree view" data-analytics="view-360">
+          <svg viewBox="0 0 24 24" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-3-6.7"/><path d="M21 3v5h-5"/></svg>
         </button>
         <button class="quick-btn" onclick="openQuickView('${p.id}')" aria-label="Quick view" data-analytics="quick-view">
           <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6"><path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/></svg>
@@ -1451,13 +1681,18 @@ function openQuickView(id){
   const rating = getAvgRating(p.id);
   const outOfStock = p.stock <= 0;
   document.getElementById('qvContent').innerHTML = `
-    <img src="${p.image}" alt="${p.name}">
+    <img src="${p.image}" alt="${p.name}" style="cursor:pointer;" onclick="open360View('${p.id}')" onerror="this.src='https://placehold.co/600x700/f1ead9/2f2418?text=Image+unavailable'" title="Click to view in 360°">
     <div class="qv-info">
       <div style="display:flex; justify-content:space-between; align-items:flex-start;">
         <span class="supplier">${supplierName(p.supplier)}</span>
-        <button class="wish-btn" style="position:static;" onclick="toggleWishlist('${p.id}')">
-          <svg viewBox="0 0 24 24" stroke-width="1.6" class="${isWishlisted(p.id)?'active':''}" style="${isWishlisted(p.id)?'fill:var(--burgundy);':''}"><path d="M12 21s-7.5-4.6-10-9.2C0.4 8.4 2 4.5 5.6 4c2-.3 3.7.7 6.4 3.4C14.7 4.7 16.4 3.7 18.4 4c3.6.5 5.2 4.4 3.6 7.8-2.5 4.6-10 9.2-10 9.2z"/></svg>
-        </button>
+        <div style="display:flex; gap:8px;">
+          <button class="view360-btn" style="position:static;" onclick="open360View('${p.id}')" aria-label="360 degree view">
+            <svg viewBox="0 0 24 24" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-3-6.7"/><path d="M21 3v5h-5"/></svg>
+          </button>
+          <button class="wish-btn" style="position:static;" onclick="toggleWishlist('${p.id}')">
+            <svg viewBox="0 0 24 24" stroke-width="1.6" class="${isWishlisted(p.id)?'active':''}" style="${isWishlisted(p.id)?'fill:var(--burgundy);':''}"><path d="M12 21s-7.5-4.6-10-9.2C0.4 8.4 2 4.5 5.6 4c2-.3 3.7.7 6.4 3.4C14.7 4.7 16.4 3.7 18.4 4c3.6.5 5.2 4.4 3.6 7.8-2.5 4.6-10 9.2-10 9.2z"/></svg>
+          </button>
+        </div>
       </div>
       <h2>${p.name}</h2>
       <div class="rating-row"><span class="stars">${starString(rating.avg)}</span> ${rating.avg} out of 5 (${rating.count} reviews)</div>
@@ -1642,7 +1877,8 @@ function getViewerCount(id){
 }
 
 /* ============ RATINGS & REVIEWS ============ */
-function getReviews(id){ return reviews[id] || []; }
+// Only approved reviews count toward the public list and the average rating.
+function getReviews(id){ return reviews.filter(r=>r.productId===id && r.status==='approved'); }
 function getAvgRating(id){
   const list = getReviews(id);
   if(!list.length) return { avg: (4 + Math.random()*0.9).toFixed(1), count: 8 + Math.floor(Math.random()*40) };
@@ -1654,10 +1890,15 @@ function starString(avg){
   return '★'.repeat(rounded) + '☆'.repeat(5-rounded);
 }
 function renderReviewsBlock(product){
-  const list = getReviews(product.id);
-  const listHtml = list.length ? list.map(r=>`
+  const approved = getReviews(product.id);
+  // Also show this browser's own pending review(s) for this product, tagged clearly,
+  // so a customer knows their review went through even before it's public.
+  const ownPending = reviews.filter(r=>r.productId===product.id && r.status==='pending' && myReviewIds.includes(r.id));
+  const combined = [...approved, ...ownPending];
+  const listHtml = combined.length ? combined.map(r=>`
     <div class="review-item">
       <span class="rn">${r.name}</span> &nbsp; <span class="rs">${starString(r.rating)}</span>
+      ${r.status==='pending' ? '<span class="review-pending-tag">Pending approval</span>' : ''}
       <div class="rc">${r.comment}</div>
     </div>`).join('') : '<p style="font-size:.8rem; color:#8a806c;">Be the first to review this piece.</p>';
   return `
@@ -1683,11 +1924,17 @@ function submitReview(productId){
   const rating = Number(document.getElementById('rev_rating').value);
   const comment = document.getElementById('rev_comment').value.trim();
   if(!comment){ showToast('Please add a short comment'); return; }
-  if(!reviews[productId]) reviews[productId] = [];
-  reviews[productId].push({ name, rating, comment, time: new Date().toLocaleString('en-IN') });
-  localStorage.setItem('avenzo_reviews', JSON.stringify(reviews));
+  const review = {
+    id: 'rev'+Date.now()+Math.random().toString(36).slice(2,8),
+    productId, name, rating, comment,
+    time: new Date().toLocaleString('en-IN'),
+    status: 'pending'
+  };
+  persistReviewAdd(review);
+  myReviewIds.push(review.id);
+  try{ localStorage.setItem('avenzo_my_reviews', JSON.stringify(myReviewIds)); }catch(e){}
   trackEvent('submit_review', { product_id: productId, rating });
-  showToast('Thank you for your review');
+  showToast('Thank you — your review is queued for approval');
   openQuickView(productId);
 }
 
@@ -1861,9 +2108,13 @@ function buildOrderSummary(paymentMethod){
   const discount = couponDiscount(sub);
   let ship = sub >= SHIPPING_THRESHOLD ? 0 : SHIPPING_FEE;
   if(appliedCoupon && appliedCoupon.type === 'shipping' && sub >= (appliedCoupon.minSpend||0)) ship = 0;
+  const customerEmail = document.getElementById('co_email').value.trim();
   return {
+    _subject: `Avenzo Order Confirmation — ${LAST_ORDER_ID || ''}`,
+    _cc: customerEmail || undefined,
+    order_id: LAST_ORDER_ID || '',
     customer_name: document.getElementById('co_name').value.trim(),
-    customer_email: document.getElementById('co_email').value.trim(),
+    customer_email: customerEmail,
     customer_phone: document.getElementById('co_phone').value.trim(),
     delivery_address: document.getElementById('co_address').value.trim(),
     items: items,
@@ -1873,7 +2124,8 @@ function buildOrderSummary(paymentMethod){
     shipping: ship===0 ? 'Complimentary' : inr(ship),
     total: inr(Math.max(0, sub-discount+ship)),
     payment_method: paymentMethod,
-    order_time: new Date().toLocaleString('en-IN')
+    order_time: new Date().toLocaleString('en-IN'),
+    tracking_note: 'Track this order anytime at the storefront under "Track Your Order" using the Order ID above and this email/phone.'
   };
 }
 
@@ -2085,6 +2337,52 @@ function showConsoleToast(elId, msg){
   setTimeout(()=>{ if(el.textContent===msg) el.textContent=''; }, 3000);
 }
 
+function renderReviewsTable(){
+  const tbody = document.getElementById('reviewsTable');
+  if(!tbody) return;
+  const pendingCount = reviews.filter(r=>r.status==='pending').length;
+  const countEl = document.getElementById('reviewsPendingCount');
+  if(countEl) countEl.textContent = pendingCount ? `(${pendingCount} pending)` : '';
+  const sorted = [...reviews].sort((a,b)=>{
+    if(a.status==='pending' && b.status!=='pending') return -1;
+    if(b.status==='pending' && a.status!=='pending') return 1;
+    return new Date(b.time) - new Date(a.time);
+  });
+  tbody.innerHTML = sorted.length ? sorted.map(r=>{
+    const product = products.find(p=>p.id===r.productId);
+    const statusClass = r.status==='approved' ? 'paid' : (r.status==='rejected' ? 'rejected' : 'pending');
+    return `<tr>
+      <td>${product ? product.name : r.productId}</td>
+      <td class="rating-row"><span class="stars">${starString(r.rating)}</span></td>
+      <td>${r.name}</td>
+      <td style="max-width:260px; white-space:normal;">${r.comment}</td>
+      <td style="white-space:nowrap;">${r.time}</td>
+      <td><span class="status-badge status-${statusClass}">${r.status.charAt(0).toUpperCase()+r.status.slice(1)}</span></td>
+      <td style="white-space:nowrap;">
+        ${r.status!=='approved' ? `<button onclick="persistReviewStatus('${r.id}','approved')">Approve</button>` : ''}
+        ${r.status!=='rejected' ? `<button onclick="persistReviewStatus('${r.id}','rejected')">Reject</button>` : ''}
+        <button onclick="persistReviewDelete('${r.id}')">Delete</button>
+      </td>
+    </tr>`;
+  }).join('') : '<tr><td colspan="7" style="opacity:.6;">No reviews yet.</td></tr>';
+}
+
+/* ============ STOREFRONT SETTINGS (console) ============ */
+function renderSettingsPanel(){
+  const toggle = document.getElementById('flashSaleToggle');
+  const statusText = document.getElementById('flashSaleStatusText');
+  const on = siteSettings.flashSaleEnabled !== false;
+  if(toggle) toggle.classList.toggle('on', on);
+  if(statusText) statusText.textContent = on ? 'Currently showing on the storefront' : 'Currently hidden from the storefront';
+  const shipLabel = document.getElementById('shipThresholdLabel');
+  if(shipLabel) shipLabel.textContent = inr(SHIPPING_THRESHOLD);
+}
+function toggleFlashSaleBanner(){
+  const next = !(siteSettings.flashSaleEnabled !== false);
+  persistSettingsUpdate({ flashSaleEnabled: next });
+  showConsoleToast('settingsToast', next ? 'Flash sale banner turned on.' : 'Flash sale banner turned off.');
+}
+
 document.getElementById('productForm').addEventListener('submit', function(e){
   e.preventDefault();
   const id = 'p' + Date.now();
@@ -2217,6 +2515,9 @@ renderSupplierOptions();
 renderSupplierTable();
 renderProductTable();
 renderOrdersTable();
+renderReviewsTable();
+renderSettingsPanel();
+applyFlashSaleVisibility();
 applyLanguage();
 applyImageOptimizations();
 </script>
