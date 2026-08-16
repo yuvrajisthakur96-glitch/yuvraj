@@ -1,27 +1,47 @@
-# Avenzo Official
+# AVENZO OFFICIAL
 
-This repository contains the source code for the **Avenzo Official** website — a static HTML page with a built-in styled storefront layout and a hidden admin console accessible via a small icon in the footer.
+### The House Collection
 
-## 📁 Files
+Avenzo Official is a web project created by Yuvraj as part of my journey into web development and software engineering.
 
-- `src_avenzo-official-no-products.html` — main site page (HTML, CSS, and JS all in one file)
+## 🌐 Live Website
 
-## 🚀 Usage
+**[Visit Avenzo Official](https://avenzo-official-products-6.vercel.app/)**
 
-This is a static site with no build steps required.
+## 📖 About
 
-- **Run locally:** just open the HTML file in your browser
-- **Host on GitHub Pages:**
-  1. Go to **Settings → Pages**
-  2. Set the source branch to `main`
-  3. Set the folder to `/ (root)` (or wherever the HTML file lives)
-  4. Save — your site will be live at `https://yuvrajisthakur96-glitch.github.io/yuvraj/`
+Avenzo is a product-focused web experience designed with a custom visual interface and responsive layout.
 
-## 🔒 Admin Console
+The project is built from scratch and deployed online using Vercel.
 
-The site includes a hidden console panel unlocked via a small icon in the footer, protected by a passcode set in the page's JavaScript (`CONSOLE_PASSCODE`).
+## 🛠️ Technologies
 
-## 📝 Notes
+- HTML5
+- CSS3
+- Google Fonts
+- Responsive Web Design
+- Vercel
 
-- No dependencies or package manager required
-- Update content directly in the HTML file
+## ✨ Highlights
+
+- Custom-designed interface
+- Responsive viewport configuration
+- Custom typography
+- Product-focused presentation
+- Live production deployment
+- Continuously improved through multiple commits
+
+## 🎯 Why I Built This
+
+I created Avenzo to gain practical experience building and deploying a real-world web project while developing my skills in web development and software engineering.
+
+## 🚀 Deployment
+
+The project is deployed with Vercel and is continuously updated as I improve the website.
+
+## 👨‍💻 Developer
+
+**Yuvraj**
+
+GitHub:  
+https://github.com/yuvrajisthakur96-glitch
